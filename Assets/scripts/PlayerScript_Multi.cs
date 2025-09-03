@@ -11,11 +11,10 @@ public class PlayerScript_Multi : MonoBehaviour
     [SerializeField] public float moveSpeed = 5f;
     [SerializeField] public float sprintSpeed = 8f;
     [SerializeField] public float TurnSmoothTime = 0.1f;
-    // [SerializeField] public float airControl = 0.45f;     
-    private float TurnSmoothVel;
+   
+       private float TurnSmoothVel;
     private Vector2 moveInput;                              // WASD & left stick on controller
-    private Rigidbody rb;
-    // private float baseMoveSpeed;                       
+    private Rigidbody rb;                      
     private bool usePlayerInput;                           
 
     //Jump 

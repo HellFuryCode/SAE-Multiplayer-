@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class ItemPickup : MonoBehaviour
 {
     public ItemData data;
