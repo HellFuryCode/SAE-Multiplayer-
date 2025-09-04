@@ -5,17 +5,17 @@ public class PlayerScript_Multi : MonoBehaviour
 {
     //camrea
     public Transform Camera;                 
-    private Vector3 originalForward;
+    private Vector3 originalForward;  //true north essenrtionally 
 
     // movemnet
     [SerializeField] public float moveSpeed = 5f;
-    [SerializeField] public float sprintSpeed = 8f;
+    [SerializeField] public float sprintSpeed = 8f;  //shift / r2
     [SerializeField] public float TurnSmoothTime = 0.1f;
    
        private float TurnSmoothVel;
     private Vector2 moveInput;                              // WASD & left stick on controller
     private Rigidbody rb;                      
-    private bool usePlayerInput;                           
+    private bool usePlayerInput;                           //keyboard 
 
     //Jump 
     public float jumpForce = 10f;                           
@@ -33,11 +33,11 @@ public class PlayerScript_Multi : MonoBehaviour
 
     // Stamina & Sprint 
     public float maxStamina = 100f;
-    public float staminaDrainPerSecond = 22f;               // while sprinting
+    public float staminaDrainPerSecond = 22f;               // while sprinting (ui TO be added)
     public float staminaRegenPerSecond = 16f;               // while not sprinting / idle
     [Range(0f, 1f)] public float sprintMinPercentToStart = 0.2f;
     private float stamina;
-    private bool sprintHeld;
+    private bool sprintHeld;   
 
     // Input
     private InputSystem_Actions inputActions;              
@@ -47,7 +47,7 @@ public class PlayerScript_Multi : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // keep capsule upright
+        rb.freezeRotation = true; // keep capsule upright duh
 
         playerInput = GetComponent<PlayerInput>();
         {
@@ -206,7 +206,7 @@ public class PlayerScript_Multi : MonoBehaviour
         }
     }
 
-    // -------- PlayerInput (local multiplayer) --------
+    // PlayerInput (local multiplayer which kinda works ehhh)
     public void OnMove(InputValue value)  => moveInput = value.Get<Vector2>();
     public void OnJump(InputValue value)  { if (value.isPressed) Jump(); }
     public void OnSprint(InputValue value){ sprintHeld = value.isPressed; }
