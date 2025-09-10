@@ -2,6 +2,8 @@
 	//Simple depthmask shader 
 	SubShader {
 	    Tags {Queue = Background}
-	    Pass {ColorMask 0}
+	    Pass {
+			ZWrite On
+			ColorMask 0}
 	}
 }

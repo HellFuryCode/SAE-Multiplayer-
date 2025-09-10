@@ -16,6 +16,10 @@ namespace BitGamey
 		[Tooltip("Drag the Player2 object into this slot.")]
 		[SerializeField] private Transform player2;                         // Store transform of the second player.
 
+		[Header("Materials (URP)")]
+		[SerializeField] private Material lineMaterialURP; // for SplitQuadB (the visible line) – use URP/Unlit color
+		[SerializeField] private Material maskMaterialURP; // for SplitQuadA (the depth mask) – use Hidden/URPDepthMask
+
 		[Header("Camera Settings")]
 
 		[Tooltip("Camera X position offset (from EasySplitScreen default camera position).")]
@@ -109,6 +113,33 @@ namespace BitGamey
 			Material tempMaterial2 = new Material(Shader.Find("Mask/SplitScreen"));         // Create new material assigned to tempMaterial2.
 			SplitQuadA.GetComponent<Renderer>().material = tempMaterial2;                   // Set SplitQuadA renderer material to newly created material.
 			SplitQuadA.layer = LayerMask.NameToLayer("TransparentFX");                      // Set SplitQuadA layer mask.
+
+			if (lineMaterialURP != null)
+			{
+				SplitQuadB.GetComponent<Renderer>().material = lineMaterialURP;
+			}
+			else
+			{
+				// Fallback to Unlit/Color if no URP material assigned
+				Material tempLine = new Material(Shader.Find("Unlit/Color"));
+				tempLine.color = splitscreenLineColor;
+				SplitQuadB.GetComponent<Renderer>().material = tempLine;
+			}
+			SplitQuadB.GetComponent<Renderer>().sortingOrder = 2;
+			SplitQuadB.layer = LayerMask.NameToLayer("TransparentFX");
+
+			// MASK (SplitQuadA) – writes depth only, no color
+			if (maskMaterialURP != null)
+			{
+				SplitQuadA.GetComponent<Renderer>().material = maskMaterialURP;
+			}
+			else
+			{
+				// Fallback to the old built-in name if someone didn’t assign an URP material
+				Material tempMask = new Material(Shader.Find("Mask/SplitScreen"));
+				SplitQuadA.GetComponent<Renderer>().material = tempMask;
+			}
+			SplitQuadA.layer = LayerMask.NameToLayer("TransparentFX");
 		}
 
 		private void UpdateLineSize()
@@ -161,6 +192,18 @@ namespace BitGamey
 				(player1.position.y + player2.position.y) / 2,
 				(player1.position.z + player2.position.z) / 2);                                             // Determine midpoint between the players.
 
+			if (distanceBetweenPlayers < 0.0001f)
+			{
+				// Players are on top of each other; keep line neutral and bail early.
+				SplitQuadB.transform.localEulerAngles = Vector3.zero;
+				// Also ensure split is disabled when close:
+				if (SplitQuadB.activeSelf) SplitQuadB.SetActive(false);
+				SplitscreenCamera.SetActive(false);
+				return;
+			}
+
+			float ratio = Mathf.Clamp(distanceZaxis / distanceBetweenPlayers, -1f, 1f);
+ 
 			// If it's time to split, calculate the new midpoint.
 			if (distanceBetweenPlayers > splitscreenDist)
 			{
@@ -171,10 +214,10 @@ namespace BitGamey
 				midPoint = player1.position + offset;
 
 				Vector3 offset2 = midPoint - player2.position;
-				offset2.x = Mathf.Clamp(offset.x, -splitscreenDist / 2, splitscreenDist / 2);
-				offset2.y = Mathf.Clamp(offset.y, -splitscreenDist / 2, splitscreenDist / 2);
-				offset2.z = Mathf.Clamp(offset.z, -splitscreenDist / 2, splitscreenDist / 2);
-				Vector3 midPoint2 = player2.position - offset;
+				offset2.x = Mathf.Clamp(offset2.x, -splitscreenDist / 2, splitscreenDist / 2);
+				offset2.y = Mathf.Clamp(offset2.y, -splitscreenDist / 2, splitscreenDist / 2);
+				offset2.z = Mathf.Clamp(offset2.z, -splitscreenDist / 2, splitscreenDist / 2);
+				Vector3 midPoint2 = player2.position + offset2;
 
 				// Enable second quad and camera, then set second camera position.
 				if (SplitQuadB.activeSelf == false)
