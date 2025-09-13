@@ -148,13 +148,6 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    //     private string GetInteractHint() 
-    // {
-    //     var pi = GetComponent<PlayerInput>();
-    //     var scheme = pi ? (pi.currentControlScheme ?? "") : "";
-    //     return scheme.ToLower().Contains("gamepad") ? "O" : "E";
-    // }
-
             private void OnDrawGizmosSelected()  //pretty inspector thing so we can see
         {
             if (!lookOrigin) return;
