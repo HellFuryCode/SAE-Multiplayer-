@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu()]
+[CreateAssetMenu(menuName = "Crafting/Recipe", fileName = "Recipe_")]
 public class CraftingRecipeSO : ScriptableObject
 {
     public Sprite sprite;
