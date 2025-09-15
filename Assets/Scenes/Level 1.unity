@@ -5954,7 +5954,7 @@ MonoBehaviour:
   axis: 0
   splitDistance: 12
   followOffset: {x: 0, y: 8, z: -10}
-  followSmooth: 30
+  followSmooth: 100
   singlePullbackFactor: 0.75
   singleMinDist: 6
   singleMaxDist: 28
