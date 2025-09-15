@@ -1,36 +1,58 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.InputSystem;
+using TMPro;
+using Unity.VisualScripting;
 
 public class CharacterSelctUI : MonoBehaviour
 {
+    public TMP_Text nameLabel;
+    public GameObject readyBadge;
     public GameObject[] characters;
-    public int selectedCharcter = 0;
+    public int  currentIndex = 0; 
+    public float naigationCooldownSeconds = 0.15f;
 
-    public void NextCharacter()
+    private float navigationTimer = 0.0f;
+    private bool isReady = false;
+
+    private CharacterSelectPersistence persistence;
+    private CharacterSelectManager manager;
+    private PlayerInput playerInput;
+
+    private void Awake()
     {
-        characters[selectedCharcter].SetActive(false);
-        selectedCharcter = (selectedCharcter + 1) % characters.Length;
-        characters[selectedCharcter].SetActive(true);
+        playerInput = GetComponent<PlayerInput>();
+        persistence = CharacterSelectPersistence.Instance;
+        manager = FindAnyObjectByType<CharacterSelectManager>();
     }
 
-    public void PreviousCharacter()
+    private void Start()
     {
-        characters[selectedCharcter].SetActive(false);
-        selectedCharcter--;
-        if (selectedCharcter < 0)
+        if (readyBadge != null) readyBadge.SetActive(false);
+        UpdateLabel();
+    }
+
+    private void Update()
+    {
+        if (navigationTimer > 0.0f)
         {
-            selectedCharcter += characters.Length;
+            navigationTimer -= Time.unscaledDeltaTime;
         }
-        characters[selectedCharcter].SetActive(true);
     }
 
-    public void StartGame()
+    private void UpdateLabel()
     {
-        PlayerPrefs.SetInt("selectedCharcter", selectedCharcter);
-        SceneManager.LoadScene(2);
+        if (persistence == null || persistence.characterPrefabs == null || persistence.characterPrefabs.Count == 0)
+        {
+            if (nameLabel != null) nameLabel.text = "(No Characters Confriggured)";
+            return;
+        }
+
+        if (currentIndex < 0) currentIndex = 0;
+        if (currentIndex >= persistence.characterPrefabs.Count) currentIndex = persistence.characterPrefabs.Count - 1;
     }
 
+    
 }
 
 
