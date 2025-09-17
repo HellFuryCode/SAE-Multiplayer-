@@ -6,133 +6,138 @@ using UnityEngine.UI;
 
 public class CraftingBowl : MonoBehaviour
 {
-        //ui duh
+
+    public PlayerIdentity owner;
+
+    [Header("Recipes")]
+    public CraftingRecipeSO recipe;
     [SerializeField] private Image recipeImage;
-
-      [Tooltip("recipes")]
-    [SerializeField] private List<CraftingRecipeSO> recipes = new();
-
-
-    //where to find the items
-    [SerializeField] private BoxCollider placeItemsAreaBoxCollider;  //bowl zone not trigger
-    [SerializeField] private LayerMask itemMask = ~0; //the layers my items are on for the items specificallly
 
     //spawn points
     [SerializeField] private Transform itemSpawnPoint;
     [SerializeField] private Transform VFXSpawnItem;
- 
-    int _recipeIndex = 0;
 
+    [Tooltip("recipes")]
+    public BoxCollider bowlTrigger; //zones for whos whpses
+    [SerializeField] private LayerMask itemMask = ~0; //the layers my items are on for the items specificallly
 
-/// <summary>
-/// /////////////////////////////////////////////////////////////////////////////////////////////
-/// </summary>
+    private readonly HashSet<ItemPickup> contents = new();
+
+    private void Reset()
+    {
+        bowlTrigger = GetComponent<BoxCollider>();
+        if (bowlTrigger) bowlTrigger.isTrigger = true;
+    }
 
     private void Awake()
     {
-        if (recipes.Count > 0 && recipeImage)
-        {
-            recipeImage.sprite = recipes[_recipeIndex].sprite;
-        }
-            if (!placeItemsAreaBoxCollider)
-                {
-                    Debug.LogWarning("[CraftingBowl: placeItemsAreaboxcollider isnt set");
-                }
+        if (!bowlTrigger) bowlTrigger = GetComponent<BoxCollider>();
+
+        if (bowlTrigger) bowlTrigger.isTrigger = true;
+
+        if (recipe && recipeImage) recipeImage.sprite = recipe.sprite;
     }
 
-    public void NextRecipe()
+    private void OnTriggerEnter(Collider other)
     {
-        if (recipes.Count == 0) return;
-        _recipeIndex = (_recipeIndex + 1) % recipes.Count;
-        if (recipeImage) recipeImage.sprite = recipes[_recipeIndex].sprite;
+        TryAdd(other);
+        TryAutoCraft();
     }
 
-    public void Craft()
+    void OnTriggerExit(Collider other)
     {
-        if (recipes.Count == 0 || !placeItemsAreaBoxCollider) return;
+        TryRemove(other);
+    }
 
-
-        Vector3 centerWS = placeItemsAreaBoxCollider.transform.TransformPoint(placeItemsAreaBoxCollider.center);
-        Vector3 halfExt = Vector3.Scale(placeItemsAreaBoxCollider.size, placeItemsAreaBoxCollider.transform.lossyScale) * 0.5f;
-     
-        Quaternion rot = placeItemsAreaBoxCollider.transform.rotation;
-
-        Collider[] hits = Physics.OverlapBox(centerWS, halfExt, rot, itemMask, QueryTriggerInteraction.Ignore);
-
-        // Collect kinds in bowl (unique per item)
-        List<ItemData.ItemKind> haveKinds = new();
-        List<GameObject> toConsume = new();
-
-
-        foreach (var h in hits)
+    public void TryAdd(Collider c)
+    {
+        if (((1 << c.gameObject.layer) & itemMask.value) == 0) return;
+        var pickup = c.GetComponentInParent<ItemPickup>();
+        if (!pickup || pickup.data == null) return;
         {
-            var pickup = h.GetComponentInParent<ItemPickup>();
-            if (!pickup || pickup.data == null) continue;
-            if (toConsume.Contains(pickup.gameObject)) continue;
-
-
-            haveKinds.Add(pickup.data.kind);
-             toConsume.Add(pickup.gameObject); //yum yum
+            contents.Add(pickup);
         }
+    }
 
+    public void TryRemove(Collider c)
+    {
+        var pickup = c.GetComponentInParent<ItemPickup>();
+        if (pickup) contents.Remove(pickup);
+    }
 
-        var recipe = recipes[_recipeIndex];
+    public void TryAutoCraft()
+    {
+        if (!recipe || contents.Count < recipe.inputKinds.Count) return;
 
-        if (!MatchKinds(haveKinds, recipe.inputKinds))
+        var havekinds = new Dictionary<ItemData.ItemKind, int>();
+
+        foreach (var p in contents)
         {
-            return;
-        }
-
-            foreach (var go in toConsume) Destroy(go);  //consume yum yum
-
-            if (recipe.outputPrefab && itemSpawnPoint)
+            var k = p.data.kind;
+            if (!havekinds.ContainsKey(k)) havekinds[k] = 0;
             {
-                Instantiate(recipe.outputPrefab, itemSpawnPoint.position, itemSpawnPoint.rotation);
-
+                havekinds[k]++;
             }
+        }
 
-            if (VFXSpawnItem)
+        var need = new Dictionary<ItemData.ItemKind, int>(); //why arent you working.... oh needed a >
+        foreach (var k in recipe.inputKinds)
+        {
+            if (!need.ContainsKey(k)) need[k] = 0;
             {
-                Instantiate(VFXSpawnItem, itemSpawnPoint.position, itemSpawnPoint.rotation);
+                need[k]++;
             }
-        
-
-    }
-
-
-    bool MatchKinds(List<ItemData.ItemKind> have, List<ItemData.ItemKind> need)
-    {
-
-        if (have.Count < need.Count) return false;
-
-
-        var counts = new Dictionary<ItemData.ItemKind, int>();
-
-        foreach (var k in have)
-        {
-            counts[k] = counts.TryGetValue(k, out var c) ? c + 1 : 1;
         }
 
-        foreach (var k in need)
+        //check for exact match (no extra stuff or missing things)
+        foreach (var kv in need)
         {
-            if (!counts.TryGetValue(k, out var c) || c == 0) return false;
-            counts[k] = c - 1;
+            if (!havekinds.TryGetValue(kv.Key, out var count) || count < kv.Value)
+            {
+                return;
+            }
         }
-        return true;
+
+        //sabtoage
+        foreach (var kv in havekinds)
+        {
+            if (!need.TryGetValue(kv.Key, out var needCount) || kv.Value > needCount)
+            {
+                return;  //extra or wrong items present
+            }
+        }
+
     }
 
-#if UNITY_EDITOR
-    void OnDrawGizmosSelected()
+    private void ConsumeRequired(Dictionary<ItemData.ItemKind, int> need)
     {
-        if (!placeItemsAreaBoxCollider) return;
-        Gizmos.color = new Color(0, 1, 1, 0.25f); //colour
+        var toRemove = new List<ItemPickup>();
+        foreach (var p in contents)
+        {
+            var k = p.data.kind;
+            if (need.TryGetValue(k, out var remaining) && remaining > 0)
+            {
+                need[k] = remaining - 1;
+                toRemove.Add(p);
+            }
+        }
 
-        Vector3 centerWS = placeItemsAreaBoxCollider.transform.TransformPoint(placeItemsAreaBoxCollider.center);
-        Vector3 sizeWS = Vector3.Scale(placeItemsAreaBoxCollider.size, placeItemsAreaBoxCollider.transform.lossyScale);
-        Gizmos.matrix = Matrix4x4.TRS(centerWS, placeItemsAreaBoxCollider.transform.rotation, sizeWS);
-        Gizmos.DrawCube(Vector3.zero, Vector3.one); //shape
-        Gizmos.matrix = Matrix4x4.identity;
+        foreach (var p in toRemove)
+        {
+            contents.Remove(p);
+            Destroy(p.gameObject);
+        }
     }
-#endif
+
+    private void SpawnDrink()
+    {
+        if (!recipe || !recipe.outputPrefab || !itemSpawnPoint) return;
+
+        var t = Instantiate(recipe.outputPrefab, itemSpawnPoint.position, itemSpawnPoint.rotation);
+
+        var drink = t.gameObject.GetComponent<DrinkItem>();
+        if(!drink)
+    }
+    
+
 }
-

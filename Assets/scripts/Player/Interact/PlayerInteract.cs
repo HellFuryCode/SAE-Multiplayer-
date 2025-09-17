@@ -161,7 +161,7 @@ public class PlayerInteract : MonoBehaviour
             if (hit.transform.TryGetComponent(out CraftingBowl bowl))
             {
                 var who = GetComponent<PlayerIdentity>(); 
-                bowl.Craft();
+         
             }
         }
     }
