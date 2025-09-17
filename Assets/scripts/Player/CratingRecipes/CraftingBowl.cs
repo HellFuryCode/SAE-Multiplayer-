@@ -136,7 +136,14 @@ public class CraftingBowl : MonoBehaviour
         var t = Instantiate(recipe.outputPrefab, itemSpawnPoint.position, itemSpawnPoint.rotation);
 
         var drink = t.gameObject.GetComponent<DrinkItem>();
-        if(!drink)
+        if (!drink) drink = t.gameObject.AddComponent<DrinkItem > ();  //remember <>
+        drink.crafter = owner;
+        drink.points = Mathf.Max(1, recipe.points);
+
+        if (VFXSpawnItem)
+        {
+            Instantiate(VFXSpawnItem, itemSpawnPoint.position, itemSpawnPoint.rotation);
+        }
     }
     
 
