@@ -48,6 +48,10 @@ public class CamFollow2Players : MonoBehaviour
     float yawA, pitchA, yawB, pitchB;
     PlayerScript_Multi p1Move, p2Move;
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; //very much needed
+    }
     void Awake()
     {
         // Create cameras if not assigned 
