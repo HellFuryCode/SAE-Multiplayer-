@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9185c626b0517094b925d89b7d7652df, type: 3}
   m_Name: Soda
   m_EditorClassIdentifier: 
-  displayName: Sprite
+  displayName: Soda
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   kind: 2
   localPosition: {x: 0, y: 0, z: 0}
