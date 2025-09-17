@@ -7,16 +7,12 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FreeCoffeeMaker_ToasterMaterial 1
+  m_Name: VIASS_Dman_dif
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: cc5f552d36f79c149825c2f624eeca3d, type: 2}
-  m_ModifiedSerializedProperties: 16
-  m_ValidKeywords:
-  - _METALLICSPECGLOSSMAP
-  - _NORMALMAP
-  - _OCCLUSIONMAP
-  m_InvalidKeywords:
-  - _METALLICGLOSSMAP
+  m_Parent: {fileID: 2100000, guid: deca1420018753f44b536c679b677df0, type: 2}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -30,42 +26,38 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 0a03aacbddaf447a0abfc63467ba7eb9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1e1bd48fc756d7b4ea759a3679d79569, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 163839959214e4cebad7297c2f117873, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0a03aacbddaf447a0abfc63467ba7eb9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1e1bd48fc756d7b4ea759a3679d79569, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 95c4d7f8c092c49a5876c089dc1a4f69, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: b183212f092be4d9b812117bb849b370, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DstBlend: 0
-    - _DstBlendAlpha: 0
-    - _GlossMapScale: 1
-    - _Glossiness: 0.5
-    - _GlossyReflections: 1
-    - _Metallic: 0
-    - _Parallax: 0.02
-    - _Surface: 0
-    - _ZWrite: 1
+    - _GlossMapScale: 0
+    - _Glossiness: 0
+    - _GlossyReflections: 0
+    - _Parallax: 0.005
+    - _Smoothness: 0.5
     m_Colors:
-    - _BaseColor: {r: 0.10849059, g: 0.5122173, b: 1, a: 1}
-    - _Color: {r: 0.108490564, g: 0.5122172, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &7922699437663890659
+--- !u!114 &6670277234400350365
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
