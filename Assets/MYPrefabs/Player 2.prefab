@@ -122,7 +122,6 @@ GameObject:
   - component: {fileID: 351699620344086745}
   - component: {fileID: 4240673997471179647}
   - component: {fileID: 6055250244075370835}
-  - component: {fileID: 2679052970312068410}
   - component: {fileID: 7345354566548665280}
   - component: {fileID: 5929409500960118728}
   - component: {fileID: 175686977062103778}
@@ -266,6 +265,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 0}
+  lookInput: {x: 0, y: 0}
+  faceCamerawhenIdle: 1
+  faceCamLerp: 12
   moveSpeed: 5
   sprintSpeed: 8
   TurnSmoothTime: 0.1
@@ -281,22 +283,6 @@ MonoBehaviour:
   staminaDrainPerSecond: 22
   staminaRegenPerSecond: 16
   sprintMinPercentToStart: 0.174
---- !u!114 &2679052970312068410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7365878391028675372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c5f361b797097c4684526836394fded, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 4fb4d952b28e7b341a33c0fd3b705292, type: 2}
-  lastHolder: {fileID: 0}
-  rb: {fileID: 0}
-  col: {fileID: 0}
 --- !u!114 &7345354566548665280
 MonoBehaviour:
   m_ObjectHideFlags: 0

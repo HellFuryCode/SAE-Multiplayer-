@@ -44,25 +44,19 @@ public class PlayerCarry : MonoBehaviour
 
     public void OnMash(InputValue v)
     {
-        if (!beenGrabbed)
+        if (!beenGrabbed || !v.isPressed)  return;
         {
-            return;
+             mashMeter += 1f;
         }
 
-        if (!v.isPressed)
-        {
-            return;
-        }
-
-        mashMeter += 1f;
+     
+     
     }
 
     public void EnterGrab(Transform parent, Transform grabber, Collider grabberColliderToIgnore)
     {
-        if (beenGrabbed)
-        {
-            return;
-        }
+        if (beenGrabbed) return;
+    
 
         beenGrabbed = true;
         mashMeter = 0f;
@@ -81,19 +75,17 @@ public class PlayerCarry : MonoBehaviour
 
         if (movement)
         {
-            movement.enabled = true;
+            movement.enabled = false;
         }
 
-        OnGrabbed.Invoke();
+        OnGrabbed?.Invoke(); //nullsafe
 
           }
 
     public void ExitGrab(Vector3 tossVelocity)
     {
-        if (!beenGrabbed)
-        {
-            return;
-        }
+        if (!beenGrabbed) return;
+        
 
         transform.SetParent(null, worldPositionStays: true);
         rb.isKinematic = false;
@@ -104,7 +96,8 @@ public class PlayerCarry : MonoBehaviour
             Physics.IgnoreCollision(col, grabberMainCollider, false);
         }
 
-        rb.linearVelocity = tossVelocity;
+        rb.linearVelocity = tossVelocity;  // toss after re-enabling dynamics
+
 
         beenGrabbed = false;
         GrabParent = null;
@@ -112,7 +105,11 @@ public class PlayerCarry : MonoBehaviour
         grabberMainCollider = null;
         mashMeter = 0f;
 
-        OnReasled?.Invoke();
+        if (movement)
+        {
+            movement.enabled = true; //turn it back on
+        }
+        OnReasled?.Invoke(); //nullsafe
           }
 
 

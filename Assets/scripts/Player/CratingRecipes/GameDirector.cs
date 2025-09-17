@@ -18,6 +18,7 @@ public class GameDirector : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        Instance = this;  //this was the resaon this fucker wasnt working
     }
 
     public void AddScore(int playerIndex, int points)
@@ -32,7 +33,7 @@ public class GameDirector : MonoBehaviour
 
         if (p2ScoreText)
         {
-            p2ScoreText.text = scores[0].ToString();
+            p2ScoreText.text = scores[1].ToString();
 
         }
         

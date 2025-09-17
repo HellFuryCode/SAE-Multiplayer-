@@ -7,7 +7,7 @@ public class PlayerScript_Multi : MonoBehaviour
     //camrea
     public Transform Camera;
     public Vector2 lookInput;          
-    private Vector3 originalForward;  //true north essenrtionally 
+   private Vector3 originalForward;  //true north essenrtionally 
     [SerializeField] bool faceCamerawhenIdle = true;
     [SerializeField] float faceCamLerp = 12f;  //how quick is the roate in the yaw (twisiting in vertail)
 
@@ -19,6 +19,7 @@ public class PlayerScript_Multi : MonoBehaviour
        private float TurnSmoothVel;
     private Vector2 moveInput;                              // WASD & left stick on controller
     private Rigidbody rb;                      
+    private PlayerCarry carry;
     private bool usePlayerInput;                           //keyboard 
 
     //Jump 
@@ -45,13 +46,16 @@ public class PlayerScript_Multi : MonoBehaviour
 
     // Input
     private InputSystem_Actions inputActions;              
-    private PlayerInput playerInput;        //for the multi          
+    private PlayerInput playerInput;        //for the multi     
+
 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; // keep capsule upright duh
+           carry = GetComponent<PlayerCarry>(); //bitch
+
 
         playerInput = GetComponent<PlayerInput>();
         {
@@ -111,18 +115,21 @@ public class PlayerScript_Multi : MonoBehaviour
             moveInput = inputActions.Player.Move.ReadValue<Vector2>();
 
         Sprint();
-            
+ 
     }
 
     void FixedUpdate()
     {
-    
+            if (rb.isKinematic || (carry != null && carry.beenGrabbed)) return;
+
         Move();
         ApplyJumpPhysics(); 
     }
 
     void Move()
     {
+        if (rb.isKinematic) return; 
+
         Vector3 camForward = Vector3.forward;
         Vector3 camRight   = Vector3.right;
         if (Camera)
@@ -211,9 +218,10 @@ public class PlayerScript_Multi : MonoBehaviour
 
     void Jump()
     {
+         if (rb.isKinematic) return;  
         if (isGrounded)
         {
-            isGrounded = false; 
+            isGrounded = false;
             Vector3 jumpVelocity = rb.linearVelocity;
             jumpVelocity.y = jumpForce;
             rb.linearVelocity = jumpVelocity;
@@ -222,6 +230,7 @@ public class PlayerScript_Multi : MonoBehaviour
 
     void ApplyJumpPhysics()
     {
+         if (rb.isKinematic) return;  
         if (rb.linearVelocity.y < 0)
         {
             rb.linearVelocity += fallMultiplier * Physics.gravity.y * Time.fixedDeltaTime * Vector3.up; // up

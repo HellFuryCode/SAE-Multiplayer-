@@ -1,25 +1,22 @@
-using System;
-using System.Collections.Generic;
 
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CraftingBowl : MonoBehaviour
 {
-
     public PlayerIdentity owner;
+    [SerializeField] private Image recipeImage;
+
 
     [Header("Recipes")]
     public CraftingRecipeSO recipe;
-    [SerializeField] private Image recipeImage;
+    public BoxCollider bowlTrigger; //zones for whos whpses
+    [SerializeField] private LayerMask itemMask = ~0, PickUp; //the layers my items are on for the items specificallly
 
     //spawn points
     [SerializeField] private Transform itemSpawnPoint;
     [SerializeField] private Transform VFXSpawnItem;
-
-    [Tooltip("recipes")]
-    public BoxCollider bowlTrigger; //zones for whos whpses
-    [SerializeField] private LayerMask itemMask = ~0; //the layers my items are on for the items specificallly
 
     private readonly HashSet<ItemPickup> contents = new();
 
@@ -65,53 +62,49 @@ public class CraftingBowl : MonoBehaviour
         if (pickup) contents.Remove(pickup);
     }
 
-    public void TryAutoCraft()
+    public void TryAutoCraft() //crafting logic 
     {
-        if (!recipe || contents.Count < recipe.inputKinds.Count) return;
+        if (!recipe) return;
 
-        var havekinds = new Dictionary<ItemData.ItemKind, int>();
+        var have = new Dictionary<ItemData.ItemKind, int>();
 
         foreach (var p in contents)
         {
             var k = p.data.kind;
-            if (!havekinds.ContainsKey(k)) havekinds[k] = 0;
-            {
-                havekinds[k]++;
-            }
+
+            have[k] = have.TryGetValue(k, out var c) ? c + 1 : 1;
+
         }
 
         var need = new Dictionary<ItemData.ItemKind, int>(); //why arent you working.... oh needed a >
         foreach (var k in recipe.inputKinds)
         {
-            if (!need.ContainsKey(k)) need[k] = 0;
-            {
-                need[k]++;
-            }
+            have[k] = have.TryGetValue(k, out var c) ? c + 1 : 1;
         }
 
         //check for exact match (no extra stuff or missing things)
         foreach (var kv in need)
         {
-            if (!havekinds.TryGetValue(kv.Key, out var count) || count < kv.Value)
+            if (!have.TryGetValue(kv.Key, out var c) || c < kv.Value)
             {
                 return;
             }
         }
 
         //sabtoage
-        foreach (var kv in havekinds)
+        foreach (var kv in have)
         {
-            if (!need.TryGetValue(kv.Key, out var needCount) || kv.Value > needCount)
-            {
-                return;  //extra or wrong items present
-            }
+            if (!need.TryGetValue(kv.Key, out var needCount) || kv.Value > needCount) return;  //extra or wrong items present
+
         }
 
     }
 
+
     private void ConsumeRequired(Dictionary<ItemData.ItemKind, int> need)
     {
         var toRemove = new List<ItemPickup>();
+
         foreach (var p in contents)
         {
             var k = p.data.kind;
@@ -125,7 +118,10 @@ public class CraftingBowl : MonoBehaviour
         foreach (var p in toRemove)
         {
             contents.Remove(p);
-            Destroy(p.gameObject);
+            if (p)
+            {
+                Destroy(p.gameObject);
+            }
         }
     }
 
@@ -136,15 +132,29 @@ public class CraftingBowl : MonoBehaviour
         var t = Instantiate(recipe.outputPrefab, itemSpawnPoint.position, itemSpawnPoint.rotation);
 
         var drink = t.gameObject.GetComponent<DrinkItem>();
-        if (!drink) drink = t.gameObject.AddComponent<DrinkItem > ();  //remember <>
+        if (!drink) drink = t.gameObject.AddComponent<DrinkItem>();  //remember <>
         drink.crafter = owner;
         drink.points = Mathf.Max(1, recipe.points);
+
+        if (!t.GetComponent<ItemPickup>())
+        {
+            t.gameObject.AddComponent<ItemPickup>();
+        }
 
         if (VFXSpawnItem)
         {
             Instantiate(VFXSpawnItem, itemSpawnPoint.position, itemSpawnPoint.rotation);
         }
     }
-    
+
+    public void SetRecipe(CraftingRecipeSO newRecipe)
+    {
+        recipe = newRecipe;
+        if (recipeImage && recipe)
+        {
+            recipeImage.sprite = recipe.sprite;
+            contents.Clear();
+        }
+    }
 
 }

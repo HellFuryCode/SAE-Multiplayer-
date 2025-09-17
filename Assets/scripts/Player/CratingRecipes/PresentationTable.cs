@@ -8,7 +8,7 @@ public class PresentationTable : MonoBehaviour  //megamind
 
     private void OnTriggerEnter(Collider other)
     {
-       // if (((1 << other.gameObject, layer) & itemMask.value) == 0) return;
+        if (((1 << other.gameObject.layer) & itemMask.value) == 0) return;  //. not ,
 
         var pickup = other.GetComponentInParent<ItemPickup>();
         if (!pickup) return;
