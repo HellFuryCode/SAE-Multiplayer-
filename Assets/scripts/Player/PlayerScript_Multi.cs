@@ -111,11 +111,6 @@ public class PlayerScript_Multi : MonoBehaviour
             moveInput = inputActions.Player.Move.ReadValue<Vector2>();
 
         Sprint();
-
-        if (faceCamerawhenIdle && moveInput == Vector2.zero)
-        {
-               AlignToCameraTwist();  
-        }
             
     }
 

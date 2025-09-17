@@ -163,7 +163,7 @@ public class CamFollow2Players : MonoBehaviour
 
     private void UpdateOrbitInput()
     {
-       
+  
         //p1
         if (p1Move != null)
         {
@@ -189,7 +189,11 @@ public class CamFollow2Players : MonoBehaviour
 
     private bool UseMouse()
     {
-        return UnityEngine.InputSystem.Mouse.current != null;
+        var m = UnityEngine.InputSystem.Mouse.current;
+        if (m == null) return false;
+
+        var d = m.delta.ReadValue();
+        return d.sqrMagnitude > 0.000001f;
     }
 
    private Vector3 OrbitOffset(float pitchDeg, float yawDeg)
