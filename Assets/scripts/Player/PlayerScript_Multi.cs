@@ -6,6 +6,8 @@ public class PlayerScript_Multi : MonoBehaviour
     //camrea
     public Transform Camera;                 
     private Vector3 originalForward;  //true north essenrtionally 
+    [SerializeField] bool faceCamerawhenIdle = true;
+    [SerializeField] float faceCamLerp = 12f;  //how quick is the roate in the yaw (twisiting in vertail)
 
     // movemnet
     [SerializeField] public float moveSpeed = 5f;
@@ -101,14 +103,21 @@ public class PlayerScript_Multi : MonoBehaviour
 
     void Update()
     {
-            if (!usePlayerInput)
+        if (!usePlayerInput)
             moveInput = inputActions.Player.Move.ReadValue<Vector2>();
 
-             Sprint();
+        Sprint();
+
+        if (faceCamerawhenIdle && moveInput == Vector2.zero)
+        {
+               AlignToCameraTwist();  
+        }
+            
     }
 
     void FixedUpdate()
     {
+    
         Move();
         ApplyJumpPhysics(); 
     }
@@ -167,6 +176,24 @@ public class PlayerScript_Multi : MonoBehaviour
             stamina = Mathf.Min(maxStamina, stamina + staminaRegenPerSecond * Time.deltaTime);
         }
     }
+
+
+    private void AlignToCameraTwist()
+    {
+        if (!Camera) return;
+
+        Vector3 camFwd = Camera.forward; //flatting the camera so it face the rotation
+        camFwd.y = 0f;
+
+        if (camFwd.sqrMagnitude < 0.0001f) return;
+        {
+            Quaternion target = Quaternion.LookRotation(camFwd.normalized, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * faceCamLerp);
+        }
+    
+ }
+
+
 
     private void Crouch()
     {
