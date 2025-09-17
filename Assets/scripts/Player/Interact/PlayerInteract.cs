@@ -11,7 +11,7 @@ public class PlayerInteract : MonoBehaviour
             CameraFlattened     // use lookOrigin.forward flattened to XZ (good if cam is static)
         }  
 
-        public Text promptText;               //ui pickup
+        public TMP_Text promptText;               //ui pickup
         public bool showDropPrompt = true; 
 
         public Transform lookOrigin;     // player

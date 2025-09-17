@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 2406045463624980221}
   - component: {fileID: 6561860279063751568}
   m_Layer: 7
-  m_Name: Sprite can 1
+  m_Name: Soda
   m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -18.679617, y: 0.099998474, z: -5.0506477}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 20, y: 14, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3575572556980902467}
@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 1c399688800a1cc49ae89ce2113c0add, type: 2}
+  lastHolder: {fileID: 0}
   rb: {fileID: 0}
   col: {fileID: 0}
 --- !u!54 &6561860279063751568

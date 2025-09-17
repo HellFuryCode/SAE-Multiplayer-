@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ItemData : ScriptableObject
 {
-    public enum ItemKind { None, Berry, Sprite }
+    public enum ItemKind { None, OrangeSlice, Soda }
     public string displayName;
     public Sprite icon;
     public ItemKind kind = ItemKind.None; //for the recipes

@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerScript_Multi : MonoBehaviour
 {
     //camrea
-    public Transform Camera;                 
+    public Transform Camera;
+    public Vector2 lookInput;          
     private Vector3 originalForward;  //true north essenrtionally 
     [SerializeField] bool faceCamerawhenIdle = true;
     [SerializeField] float faceCamLerp = 12f;  //how quick is the roate in the yaw (twisiting in vertail)
@@ -69,7 +71,7 @@ public class PlayerScript_Multi : MonoBehaviour
             inputActions.Player.Enable();
 
            inputActions.Player.Jump.performed += ctx => Jump();
-            inputActions.Player.Crouch.performed  += ctx => Crouch();
+          // inputActions.Player.Jump.performed += ctx => OnLook();
            
          inputActions.Player.Sprint.started   += ctx => sprintHeld = true;
             inputActions.Player.Sprint.canceled  += ctx => sprintHeld = false;
@@ -77,6 +79,8 @@ public class PlayerScript_Multi : MonoBehaviour
 
         stamina = maxStamina;
     }
+
+ 
 
     void OnDisable()
     {
@@ -233,8 +237,13 @@ public class PlayerScript_Multi : MonoBehaviour
         }
     }
 
+    public void OnLook(InputValue value)
+    {
+        lookInput = value.Get<Vector2>();
+    }
+
     // PlayerInput (local multiplayer which kinda works ehhh)
-    public void OnMove(InputValue value)  => moveInput = value.Get<Vector2>();
+    public void OnMove(InputValue value) => moveInput = value.Get<Vector2>();
     public void OnJump(InputValue value)  { if (value.isPressed) Jump(); }
     public void OnSprint(InputValue value){ sprintHeld = value.isPressed; }
     public void OnCrouch(InputValue value){ if (value.isPressed) Crouch(); }

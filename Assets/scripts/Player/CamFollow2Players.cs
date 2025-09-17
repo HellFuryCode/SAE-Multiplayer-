@@ -32,10 +32,21 @@ public class CamFollow2Players : MonoBehaviour
     public RectTransform divider;         
     public float dividerWidth = 4f;       // pixels to keep it constant
 
+    [Header("Orbit")]
+    public float mouseSensitiyity = 0.12f;
+    public float stickSensitivity = 120f;
+    public bool inveretY = false;
+    public float minPitch = -30f;
+    public float maxPitch = 70f;
+    public float orbitDistance = 10f;
+    public float orbitHeight = 6f;
 
     bool isSplit;
     Transform _midProxyA;
     Transform _midProxyB;
+
+    float yawA, pitchA, yawB, pitchB;
+    PlayerScript_Multi p1Move, p2Move;
 
     void Awake()
     {
@@ -43,7 +54,7 @@ public class CamFollow2Players : MonoBehaviour
         if (!camA) camA = CreateChildCamera("SplitCam_A");
         if (!camB) camB = CreateChildCamera("SplitCam_B");
 
-      
+
         var alA = camA.GetComponent<AudioListener>() ?? camA.gameObject.AddComponent<AudioListener>();
         var alB = camB.GetComponent<AudioListener>();
         if (alB) Destroy(alB);
@@ -54,6 +65,13 @@ public class CamFollow2Players : MonoBehaviour
         _midProxyB = new GameObject("ProxyB").transform;
         _midProxyA.SetParent(transform, false);
         _midProxyB.SetParent(transform, false);
+
+        p1Move = player1 ? player1.GetComponent<PlayerScript_Multi>() : null;
+        p2Move = player2 ? player2.GetComponent<PlayerScript_Multi>() : null;
+
+        var startYaw = Quaternion.LookRotation(new Vector3(followOffset.x, 0, followOffset.z)).eulerAngles.y;
+        yawA = yawB = startYaw;
+        pitchA = pitchB = Mathf.Clamp(20f, minPitch, maxPitch); //sslight tilt downn
     }
 
     Camera CreateChildCamera(string name)
@@ -67,6 +85,7 @@ public class CamFollow2Players : MonoBehaviour
         cam.cullingMask = ~0;                     // Everything make sure its everything, becuase if its TransparentXR mask itll lose its shit
         cam.depth = 0;
         cam.rect = new Rect(0, 0, 1, 1);
+
         cam.allowHDR = true;
         cam.allowMSAA = true;
         cam.targetDisplay = 0;
@@ -87,11 +106,14 @@ public class CamFollow2Players : MonoBehaviour
             else SetSingleView();
         }
 
+        UpdateOrbitInput();
+
         if (isSplit) UpdateSplitCameras();
         else UpdateSingleCamera(dist);
     }
 
 
+  
     void SetSplitView()  //making it look good
     {
         // Two cameras, two rects
@@ -116,13 +138,13 @@ public class CamFollow2Players : MonoBehaviour
             {
                 divider.anchorMin = new Vector2(0.5f, 0f);
                 divider.anchorMax = new Vector2(0.5f, 1f);
-                divider.sizeDelta = new Vector2(dividerWidth, 0f);
+                 divider.sizeDelta = new Vector2(dividerWidth, 0f);
                 divider.anchoredPosition = Vector2.zero;
             }
             else
             {
                 divider.anchorMin = new Vector2(0f, 0.5f);
-                divider.anchorMax = new Vector2(1f, 0.5f);
+                 divider.anchorMax = new Vector2(1f, 0.5f);
                 divider.sizeDelta = new Vector2(0f, dividerWidth);
                 divider.anchoredPosition = Vector2.zero;
             }
@@ -140,29 +162,65 @@ public class CamFollow2Players : MonoBehaviour
         if (divider) divider.gameObject.SetActive(false);
     }
 
-        //logic for following players
+    private void UpdateOrbitInput()
+    {
+        if (p1Move != null)
+        {
+            var li = p1Move.lookInput;
+            float sx = UseMouse() ? mouseSensitiyity : (stickSensitivity * Time.deltaTime);
+            float sy = sx * (inveretY ? 1f : -1f);
+
+            yawA += li.x * sx;
+            pitchA = Mathf.Clamp(pitchA + li.y * sy, minPitch, maxPitch);
+        }
+
+          if (p2Move != null)
+        {
+            var li = p2Move.lookInput;
+            float sx = UseMouse() ? mouseSensitiyity : (stickSensitivity * Time.deltaTime);
+            float sy = sx * (inveretY ? 1f : -1f);
+
+            yawB += li.x * sx;
+            pitchB = Mathf.Clamp(pitchA + li.y * sy, minPitch, maxPitch);
+        }
+    }
+
+    private bool UseMouse()
+    {
+        return UnityEngine.InputSystem.Mouse.current != null;
+    }
+
+
+
+    //logic for following players
     void UpdateSplitCameras()
     {
-        FollowTarget(camA.transform, player1.position);
-        AimAt(camA.transform, player1.position);
-
-        FollowTarget(camB.transform, player2.position);
-        AimAt(camB.transform, player2.position);
+        //player 1
+        var offA = orbitDistance;
     }
 
     void UpdateSingleCamera(float dist)   // Follow midpoint of the players and pull back a bit as they separate
     {
         Vector3 mid = (player1.position + player2.position) * 0.5f;
 
+        var off = OrbitOffset(pitchA, yawA); 
+      
         float t = Mathf.InverseLerp(singleMinDist, singleMaxDist, dist);
         t = Mathf.Clamp01(t);
-
-        Vector3 desired = mid + followOffset * (1f + singlePullbackFactor * t);
+          Vector3 desired = mid + followOffset * (1f + singlePullbackFactor * t);
+          
         camA.transform.position = Vector3.Lerp(camA.transform.position, desired, Time.deltaTime * followSmooth);
         AimAt(camA.transform, mid);
     }
 
-    void FollowTarget(Transform camTf, Vector3 targetPos)
+    private Vector3 OrbitOffset(float pitchDeg, float yawDeg)
+    {
+        var baseOffset = new Vector3(0f, orbitHeight, -orbitDistance);
+        var rot = Quaternion.Euler(pitchDeg, yawDeg, 0f);
+        return rot * baseOffset;
+    }
+
+    private void FollowTarget(Transform camTf, Vector3 targetPos)
     {
         Vector3 desired = targetPos + followOffset;
         camTf.position = Vector3.Lerp(camTf.position, desired, Time.deltaTime * followSmooth);
