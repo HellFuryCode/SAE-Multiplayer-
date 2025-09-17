@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class CraftingRecipeSO : ScriptableObject
 {
     public Sprite sprite;
-    public List<ItemSOHolder> inputItemSOlist;
-    public ItemSOHolder outputItemSO;
+    public List<ItemData.ItemKind> inputKinds = new();
+    public Transform outputPrefab;  // prefab with ItemPickup + ItemData
 
-
+    public int points = 1; //points per recipe
 
 
 

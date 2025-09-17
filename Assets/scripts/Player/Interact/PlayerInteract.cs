@@ -5,8 +5,6 @@ using TMPro;
 
 public class PlayerInteract : MonoBehaviour
 {
-   
-
         public enum AimReference
         {
             PlayerForward,      // use transform.forward flattened to XZ
@@ -35,6 +33,9 @@ public class PlayerInteract : MonoBehaviour
          private ItemPickup held;
         private Rigidbody playerRb;
 
+    [Header("Crafting")]
+    [SerializeField] private float craftRayDistance = 2.5f;
+
     private void Awake()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -43,9 +44,9 @@ public class PlayerInteract : MonoBehaviour
         {
             Debug.LogWarning("[PlayerInteract] No holdSocket assigned.");
         }
-            
-             if (promptText) promptText.enabled = false;
-        }
+
+        if (promptText) promptText.enabled = false;
+    }
 
      private void Update()
     {
@@ -126,8 +127,8 @@ public class PlayerInteract : MonoBehaviour
             if (showDropPrompt)
             {
                 promptText.enabled = true;
-                // promptText.text = $"Press {GetInteractHint()} to drop {(held.data ? held.data.displayName : held.name)}";
             }
+
             else  //dont show if they arent holding something
             {
                 promptText.enabled = false;
@@ -140,7 +141,7 @@ public class PlayerInteract : MonoBehaviour
         {
             string itemName = candidate.data ? candidate.data.displayName : candidate.name;
             promptText.enabled = true;
-            // promptText.text = $"Press {GetInteractHint()} to pick up {itemName}";
+
         }
         else
         {
@@ -148,12 +149,29 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-            private void OnDrawGizmosSelected()  //pretty inspector thing so we can see
+    public void OnUse(InputValue input)  //e and gamepad south
+    {
+        if (!input.isPressed) return;
+
+        Vector3 origin = (lookOrigin ? lookOrigin.position : transform.position) + Vector3.up *originHeightOffset;
+        Vector3 dir = GetAimDirection();
+
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, craftRayDistance))
         {
-            if (!lookOrigin) return;
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(lookOrigin.position + lookOrigin.forward * interactRange, sphereRadius);
-            Gizmos.DrawLine(lookOrigin.position, lookOrigin.position + lookOrigin.forward * interactRange);
+            if (hit.transform.TryGetComponent(out CraftingBowl bowl))
+            {
+                var who = GetComponent<PlayerIdentity>(); 
+                bowl.Craft();
+            }
         }
+    }
+
+    private void OnDrawGizmosSelected()  //pretty inspector thing so we can see
+    {
+        if (!lookOrigin) return;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(lookOrigin.position + lookOrigin.forward * interactRange, sphereRadius);
+        Gizmos.DrawLine(lookOrigin.position, lookOrigin.position + lookOrigin.forward * interactRange);
+    }
 
 }

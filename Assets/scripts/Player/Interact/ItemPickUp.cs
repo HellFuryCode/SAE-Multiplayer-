@@ -4,6 +4,8 @@ public class ItemPickup : MonoBehaviour
 {
     public ItemData data;
 
+    [HideInInspector] public PlayerIdentity lastHolder;
+
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public Collider col;
 
@@ -18,6 +20,9 @@ public class ItemPickup : MonoBehaviour
     {
         // Parent to hand/hold socket
         transform.SetParent(holdSocket, worldPositionStays: false);
+
+        lastHolder = holdSocket.GetComponentInParent<PlayerIdentity>();
+        //pos
         transform.localPosition = data ? data.localPosition : Vector3.zero;
         transform.localEulerAngles = data ? data.localEulerAngles : Vector3.zero;
         transform.localScale = data ? data.localScale : Vector3.one;
