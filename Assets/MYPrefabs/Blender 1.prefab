@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6693173843607449365}
-  - component: {fileID: 6547878984194030511}
   - component: {fileID: 4537720717591095550}
   - component: {fileID: 5398371414860900546}
   - component: {fileID: 4873369906967758286}
@@ -38,27 +37,6 @@ Transform:
   - {fileID: 2834041686247097571}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6547878984194030511
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1718894889434527047}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.025552552, y: 0.10221543, z: 0.18313062}
-  m_Center: {x: 0.083180845, y: 0.06431835, z: -0.004391996}
 --- !u!65 &4537720717591095550
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -135,14 +113,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  recipe: {fileID: 11400000, guid: 2690f8c395d9fc9499a7c205ee4f4dd6, type: 2}
   recipeImage: {fileID: 0}
-  itemSpawnPoint: {fileID: 0}
-  VFXSpawnItem: {fileID: 0}
-  bowlTrigger: {fileID: 6547878984194030511}
+  recipe: {fileID: 11400000, guid: 2690f8c395d9fc9499a7c205ee4f4dd6, type: 2}
+  bowlTrigger: {fileID: 0}
   itemMask:
     serializedVersion: 2
     m_Bits: 512
+  PickUp:
+    serializedVersion: 2
+    m_Bits: 0
+  itemSpawnPoint: {fileID: 0}
+  VFXSpawnItem: {fileID: 0}
 --- !u!1001 &2439438604457314572
 PrefabInstance:
   m_ObjectHideFlags: 0

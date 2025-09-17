@@ -19,7 +19,7 @@ public class PlayerScript_Multi : MonoBehaviour
        private float TurnSmoothVel;
     private Vector2 moveInput;                              // WASD & left stick on controller
     private Rigidbody rb;                      
-    private PlayerCarry carry;
+   
     private bool usePlayerInput;                           //keyboard 
 
     //Jump 
@@ -54,7 +54,7 @@ public class PlayerScript_Multi : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; // keep capsule upright duh
-           carry = GetComponent<PlayerCarry>(); //bitch
+  
 
 
         playerInput = GetComponent<PlayerInput>();
@@ -120,7 +120,7 @@ public class PlayerScript_Multi : MonoBehaviour
 
     void FixedUpdate()
     {
-            if (rb.isKinematic || (carry != null && carry.beenGrabbed)) return;
+
 
         Move();
         ApplyJumpPhysics(); 

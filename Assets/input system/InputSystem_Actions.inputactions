@@ -94,24 +94,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Grab",
-                    "type": "Button",
-                    "id": "9958706a-1b6d-44a9-845c-6caa93faea17",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Toss",
-                    "type": "Button",
-                    "id": "362732dc-4906-4ef5-8ac1-db13ec0815bc",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -530,50 +512,6 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Arrows",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ad160ee7-66c3-4dad-be35-f80cefa32b4e",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Grab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "000e1468-dc9f-462c-8f01-650e1ccc0a5a",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Grab",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7b0d0ca1-1894-4191-9911-ff2062bb3d26",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Toss",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8dfbaae5-c668-48e1-92b2-a572646b1037",
-                    "path": "<DualShockGamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Toss",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

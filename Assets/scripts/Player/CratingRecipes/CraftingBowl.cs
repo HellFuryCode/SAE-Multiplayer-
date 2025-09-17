@@ -51,9 +51,9 @@ public class CraftingBowl : MonoBehaviour
         if (((1 << c.gameObject.layer) & itemMask.value) == 0) return;
         var pickup = c.GetComponentInParent<ItemPickup>();
         if (!pickup || pickup.data == null) return;
-        {
-            contents.Add(pickup);
-        }
+        
+         contents.Add(pickup);
+        
     }
 
     public void TryRemove(Collider c)
@@ -66,6 +66,7 @@ public class CraftingBowl : MonoBehaviour
     {
         if (!recipe) return;
 
+
         var have = new Dictionary<ItemData.ItemKind, int>();
 
         foreach (var p in contents)
@@ -76,20 +77,24 @@ public class CraftingBowl : MonoBehaviour
 
         }
 
+
         var need = new Dictionary<ItemData.ItemKind, int>(); //why arent you working.... oh needed a >
         foreach (var k in recipe.inputKinds)
         {
             have[k] = have.TryGetValue(k, out var c) ? c + 1 : 1;
         }
 
+
         //check for exact match (no extra stuff or missing things)
         foreach (var kv in need)
         {
             if (!have.TryGetValue(kv.Key, out var c) || c < kv.Value)
             {
-                return;
+                return; //missing something
             }
         }
+
+
 
         //sabtoage
         foreach (var kv in have)
@@ -98,10 +103,13 @@ public class CraftingBowl : MonoBehaviour
 
         }
 
+        ConsumeRequired(new Dictionary<ItemData.ItemKind, int>(need));
+        SpawnDrink();
+        contents.Clear();
     }
 
 
-    private void ConsumeRequired(Dictionary<ItemData.ItemKind, int> need)
+    private void  ConsumeRequired(Dictionary<ItemData.ItemKind, int> need)
     {
         var toRemove = new List<ItemPickup>();
 
