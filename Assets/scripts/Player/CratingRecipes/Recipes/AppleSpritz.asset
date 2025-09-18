@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0931cf7618d1a0f408649dede6b55818, type: 3}
-  m_Name: OrangeSprzer
+  m_Name: AppleSpritz
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  inputKinds: 010000000200000005000000
-  outputPrefab: {fileID: 3957545491636230314, guid: 79de97898fbaeb34387ebd4329659ee2, type: 3}
-  points: 3
+  inputKinds: 030000000200000005000000
+  outputPrefab: {fileID: 859635087091735404, guid: 4c7f8bfa915269643ba8de3739c2ae94, type: 3}
+  points: 1

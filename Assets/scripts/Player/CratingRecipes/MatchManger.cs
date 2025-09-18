@@ -24,13 +24,16 @@ public class MatchManger : MonoBehaviour
     private float _timeLeft;
     private bool _roundRunning;
 
+    public CountdownUI countdown;
+
     private void Awake()
     {
         if (Instance && Instance != this)
         {
             Destroy(gameObject); return;
-            // Instance = this;
         }
+
+         Instance = this;  //fucker stay here
     }
 
     private void Start()
@@ -87,58 +90,40 @@ public class MatchManger : MonoBehaviour
         if (playerIndex == 0)
         {
             _p1Chosen = recipe; SetRecipeUI(0, recipe);
+            if (player1Bowl)
+            {
+                player1Bowl.SetRecipe(recipe);
+            }
         }
         else if (playerIndex == 1)
         {
             _p2Chosen = recipe; SetRecipeUI(1, recipe);
-        }
-
-        if (playerIndex == 0 && player1Bowl)
-        {
-            player1Bowl.SetRecipe(recipe);
-        }
-        if (playerIndex == 1 && player2Bowl)
-        {
-            player2Bowl.SetRecipe(recipe);
+             if (player2Bowl)
+            {
+                player2Bowl.SetRecipe(recipe);
+            }
         }
 
         if (!_roundRunning && _p1Chosen && _p2Chosen)
         {
-            // StartCoroutine(BeginCountdownThenStart());
+            StartCoroutine(BeginCountdownThenStart());
         }
     }
 
-    // public void ClearRecipeForPlayer(int playerIndex)
-    // {
-    //     if (playerIndex == 0)
-    //     {
-    //         _p1Chosen = null;
-    //         SetRecipeUI(0, null);
-    //     }
-    //     else
-    //     {
-    //         _p2Chosen = null;
-    //         SetRecipeUI(1, null);
-    //     }
+ private  IEnumerator BeginCountdownThenStart()
+    {
+        var seq = new[]
+        {
+            "3" , "2", "1", "<b>GO!</b>"
+        };
 
-    //     IEnumerator BeginCountdownThenStart()
-    //     {
-    //         if (countDownUI)
-    //         {
-    //             countDownUI.OnFinished = () =>
-    //             {
-    //                 if (startWall) startWall.SetActive(false);
-    //                 if (camRig) camRig.inputLocked = false;
+        if (countdown) yield return StartCoroutine(countdown.PlayCountDown(seq)); //bitch 
 
-    //                 _timeLeft = roundSeconds;
-    //                 _roundRunning = true;
-    //                 UpdateTimerUI();
-    //             };
-    //         }
+        if (startWall) startWall.SetActive(false);
+        if (camRig) camRig.inputLocked = false;
 
-    //         countDownUI.Play();
-    //     }
-
-    //     yield break;
-    // }
+        _timeLeft = roundSeconds;
+        _roundRunning = true;
+        UpdateTimerUI();
+    }
 }

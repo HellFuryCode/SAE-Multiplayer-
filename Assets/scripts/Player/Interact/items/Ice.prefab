@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 4624118511136069259}
   - component: {fileID: 3989681790134224043}
   - component: {fileID: 3644004827102903205}
-  m_Layer: 0
+  - component: {fileID: 244104443917206952}
+  - component: {fileID: 1285619788496874718}
+  m_Layer: 7
   m_Name: Ice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,3 +110,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
   m_Center: {x: -0.00000095367426, y: 0.00000095367426, z: 0}
+--- !u!114 &244104443917206952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5648035208080618941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5f361b797097c4684526836394fded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
+  lastHolder: {fileID: 0}
+  rb: {fileID: 0}
+  col: {fileID: 0}
+--- !u!114 &1285619788496874718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5648035208080618941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea72cb35afe73d44a06543b445fe0fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crafter: {fileID: 0}
+  points: 1
