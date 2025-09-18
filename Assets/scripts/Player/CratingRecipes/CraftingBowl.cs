@@ -28,11 +28,21 @@ public class CraftingBowl : MonoBehaviour
 
     private void Awake()
     {
-        if (!bowlTrigger) bowlTrigger = GetComponent<BoxCollider>();
+        if (!bowlTrigger)
+        {
+            bowlTrigger = GetComponent<BoxCollider>();
+        }
 
-        if (bowlTrigger) bowlTrigger.isTrigger = true;
+        if (bowlTrigger)
+            {
+                bowlTrigger.isTrigger = true;
+            }
 
-        if (recipe && recipeImage) recipeImage.sprite = recipe.sprite;
+
+        if (recipe && recipeImage)
+        {
+            recipeImage.sprite = recipe.sprite;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,11 +58,15 @@ public class CraftingBowl : MonoBehaviour
 
     public void TryAdd(Collider c)
     {
+        //layer filter
         if (((1 << c.gameObject.layer) & itemMask.value) == 0) return;
+
+        //only count items
         var pickup = c.GetComponentInParent<ItemPickup>();
         if (!pickup || pickup.data == null) return;
-        
-         contents.Add(pickup);
+
+        contents.Add(pickup);
+         Debug.Log($"[Bowl] + {pickup.data.kind}  (total={contents.Count})");
         
     }
 
@@ -60,15 +74,15 @@ public class CraftingBowl : MonoBehaviour
     {
         var pickup = c.GetComponentInParent<ItemPickup>();
         if (pickup) contents.Remove(pickup);
+         if (pickup) Debug.Log($"[Bowl] - {pickup.data.kind}  (total={contents.Count})");
     }
 
-    public void TryAutoCraft() //crafting logic 
+    public void TryAutoCraft() //crafting logic //aka the motherfucker who messes everythibng uuuuuup
     {
-        if (!recipe) return;
+        if (!recipe || contents.Count == 0) return;
 
 
-        var have = new Dictionary<ItemData.ItemKind, int>();
-
+        var have = new Dictionary<ItemData.ItemKind, int>(); //count what we have
         foreach (var p in contents)
         {
             var k = p.data.kind;
@@ -81,7 +95,7 @@ public class CraftingBowl : MonoBehaviour
         var need = new Dictionary<ItemData.ItemKind, int>(); //why arent you working.... oh needed a >
         foreach (var k in recipe.inputKinds)
         {
-            have[k] = have.TryGetValue(k, out var c) ? c + 1 : 1;
+            need[k] = need.TryGetValue(k, out var c) ? c + 1 : 1;
         }
 
 
@@ -94,8 +108,6 @@ public class CraftingBowl : MonoBehaviour
             }
         }
 
-
-
         //sabtoage
         foreach (var kv in have)
         {
@@ -104,6 +116,7 @@ public class CraftingBowl : MonoBehaviour
         }
 
         ConsumeRequired(new Dictionary<ItemData.ItemKind, int>(need));
+        // ConsumeRequired(need);
         SpawnDrink();
         contents.Clear();
     }
@@ -139,7 +152,11 @@ public class CraftingBowl : MonoBehaviour
 
         var t = Instantiate(recipe.outputPrefab, itemSpawnPoint.position, itemSpawnPoint.rotation);
 
-        var drink = t.gameObject.GetComponent<DrinkItem>();
+        // Ensures the spawned drink can be picked up and carries points/owner
+        var pickup = t.GetComponent<ItemPickup>();
+        if (!pickup) pickup = t.gameObject.AddComponent<ItemPickup>();
+
+        var drink = t.GetComponent<DrinkItem>();
         if (!drink) drink = t.gameObject.AddComponent<DrinkItem>();  //remember <>
         drink.crafter = owner;
         drink.points = Mathf.Max(1, recipe.points);
@@ -149,20 +166,16 @@ public class CraftingBowl : MonoBehaviour
             t.gameObject.AddComponent<ItemPickup>();
         }
 
-        if (VFXSpawnItem)
-        {
-            Instantiate(VFXSpawnItem, itemSpawnPoint.position, itemSpawnPoint.rotation);
-        }
+        if (VFXSpawnItem) Instantiate(VFXSpawnItem, itemSpawnPoint.position, itemSpawnPoint.rotation);
+        Debug.Log("[Bowl] Crafted drink!"); //sanity because im lossing it
     }
 
     public void SetRecipe(CraftingRecipeSO newRecipe)
     {
         recipe = newRecipe;
-        if (recipeImage && recipe)
-        {
-            recipeImage.sprite = recipe.sprite;
+        if (recipeImage && recipe)  recipeImage.sprite = recipe.sprite;
             contents.Clear();
-        }
+
     }
 
 }

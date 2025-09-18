@@ -8,7 +8,7 @@ public class PlayerScript_Multi : MonoBehaviour
     public Transform Camera;
     public Vector2 lookInput;          
    private Vector3 originalForward;  //true north essenrtionally 
-    [SerializeField] bool faceCamerawhenIdle = true;
+
     [SerializeField] float faceCamLerp = 12f;  //how quick is the roate in the yaw (twisiting in vertail)
 
     // movemnet
