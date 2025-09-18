@@ -42,8 +42,7 @@ public class CamFollow2Players : MonoBehaviour
 
 
    private  bool isSplit;
-    // Transform _midProxyA;
-    // Transform _midProxyB;
+    public bool inputLocked = false;
 
     float yawA, pitchA, yawB, pitchB;
     PlayerScript_Multi p1Move, p2Move;
@@ -167,7 +166,7 @@ public class CamFollow2Players : MonoBehaviour
 
     private void UpdateOrbitInput()
     {
-  
+        if (inputLocked) return;
         //p1
         if (p1Move != null)
         {
