@@ -99,7 +99,6 @@ GameObject:
   - component: {fileID: 3491398415183106632}
   - component: {fileID: 2406045463624980221}
   - component: {fileID: 6561860279063751568}
-  - component: {fileID: 727671090197539699}
   m_Layer: 7
   m_Name: Soda
   m_TagString: PickUp
@@ -221,20 +220,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &727671090197539699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402268469044305090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dca884ebef9f19543a4d29a812f20c67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originPool: {fileID: 0}
-  returnDelay: 5
 --- !u!1 &2148961412218565605
 GameObject:
   m_ObjectHideFlags: 0
