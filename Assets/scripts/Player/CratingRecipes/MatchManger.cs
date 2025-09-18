@@ -18,6 +18,7 @@ public class MatchManger : MonoBehaviour
     public TMP_Text countDownUI;
     public TMP_Text TimerUI;
 
+    public WinOrLoseUI resultsUI;
     public float roundSeconds = 120f;
 
     private CraftingRecipeSO _p1Chosen, _p2Chosen;
@@ -49,6 +50,11 @@ public class MatchManger : MonoBehaviour
             countDownUI.enabled = false;
         }
 
+        if (GameDirector.Instance)
+        {
+            GameDirector.Instance.ResetScores();
+        }
+
         _roundRunning = false;
         _timeLeft = roundSeconds;
         UpdateTimerUI();
@@ -65,7 +71,19 @@ public class MatchManger : MonoBehaviour
         if (_timeLeft <= 0f)
         {
             _roundRunning = false;
-           // EndRound();
+            // EndRound();
+        }
+
+        if (_roundRunning)
+        {
+            _timeLeft -= Time.deltaTime;
+            if (_timeLeft < 0f) _timeLeft = 0f;
+            UpdateTimerUI();
+            if (_timeLeft <= 0f)
+            {
+                _roundRunning = false;
+                EndRound();
+            }
         }
     }
 
@@ -124,7 +142,13 @@ public class MatchManger : MonoBehaviour
         }
     }
 
+    private void EndRound()
+    {
+        int p1 = GameDirector.Instance ? GameDirector.Instance.GetScore(0) : 0;
+        int p2 = GameDirector.Instance ? GameDirector.Instance.GetScore(1) : 0;
 
+        if (resultsUI) resultsUI.ShowResults(p1, p2);
+    }
  private IEnumerator BeginCountdownThenStart()
     {
         var seq = new[]
@@ -136,7 +160,7 @@ public class MatchManger : MonoBehaviour
 
         if (pedistalGroup) pedistalGroup.SetActive(false);
         if (startWall) startWall.SetActive(false);
-      //  if (camRig) camRig.inputLocked = false;
+        //  if (camRig) camRig.inputLocked = false;
 
         _timeLeft = roundSeconds;
         _roundRunning = true;

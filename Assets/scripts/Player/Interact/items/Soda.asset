@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Soda
   m_EditorClassIdentifier: 
   displayName: Soda
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 14561d4d278b1444d861fd6023b2eade, type: 3}
   kind: 2
   localPosition: {x: 0, y: 0, z: 0}
   localEulerAngles: {x: 0, y: 0, z: 0}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: orangeSlice
   m_EditorClassIdentifier: 
   displayName: Orange Slice
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 2f064c939536aaf4cb6571e1059b3d03, type: 3}
   kind: 1
   localPosition: {x: 0, y: 0, z: 0.88}
   localEulerAngles: {x: 0, y: 0, z: 0}
