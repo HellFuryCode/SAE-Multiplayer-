@@ -20,17 +20,17 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Glass
+  m_Name: Ice
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 2100000, guid: 69d86c0c1b3d90d4bafa8a19ed4e9070, type: 2}
-  m_ModifiedSerializedProperties: 16
+  m_ModifiedSerializedProperties: 24
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: 3000
   stringTagMap:
     RenderType: Transparent
@@ -44,17 +44,20 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _Cull: 0
     - _DstBlend: 10
     - _DstBlendAlpha: 10
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metallic: 1
+    - _Metallic: 0.036
     - _Parallax: 0.005
+    - _Smoothness: 0.903
     - _Surface: 1
+    - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.4077519, g: 0.46226418, b: 0.46226418, a: 0.31764707}
-    - _Color: {r: 0.40775186, g: 0.46226412, b: 0.46226412, a: 0.31764707}
+    - _BaseColor: {r: 0.5660378, g: 0.73083353, b: 0.75471693, a: 0.78039217}
+    - _Color: {r: 0.5660378, g: 0.73083353, b: 0.75471693, a: 0.78039217}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
