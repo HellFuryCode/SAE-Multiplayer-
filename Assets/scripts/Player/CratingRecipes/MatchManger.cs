@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 public class MatchManger : MonoBehaviour
 {
     public static MatchManger Instance { get; private set; }
-
+    public GameObject pedistalGroup;
     public CamFollow2Players camRig;
     public GameObject startWall;
     public CraftingBowl player1Bowl;
@@ -24,7 +24,7 @@ public class MatchManger : MonoBehaviour
     private float _timeLeft;
     private bool _roundRunning;
 
-    public CountdownUI countdown;
+    public CountdownUI countdown; //cavas group needed
 
     private void Awake()
     {
@@ -87,6 +87,7 @@ public class MatchManger : MonoBehaviour
 
     public void ConfirmRecipeForPlayer(int playerIndex, CraftingRecipeSO recipe)
     {
+            Debug.Log($"[Match] P{playerIndex+1} chose {recipe?.name}");
         if (playerIndex == 0)
         {
             _p1Chosen = recipe; SetRecipeUI(0, recipe);
@@ -98,7 +99,7 @@ public class MatchManger : MonoBehaviour
         else if (playerIndex == 1)
         {
             _p2Chosen = recipe; SetRecipeUI(1, recipe);
-             if (player2Bowl)
+            if (player2Bowl)
             {
                 player2Bowl.SetRecipe(recipe);
             }
@@ -106,6 +107,7 @@ public class MatchManger : MonoBehaviour
 
         if (!_roundRunning && _p1Chosen && _p2Chosen)
         {
+              Debug.Log("[Match] Both chosen → starting countdown…");
             StartCoroutine(BeginCountdownThenStart());
         }
     }
@@ -132,6 +134,7 @@ public class MatchManger : MonoBehaviour
 
         if (countdown) yield return StartCoroutine(countdown.PlayCountDown(seq)); //bitch 
 
+        if (pedistalGroup) pedistalGroup.SetActive(false);
         if (startWall) startWall.SetActive(false);
       //  if (camRig) camRig.inputLocked = false;
 

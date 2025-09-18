@@ -70,9 +70,10 @@ public class CountdownUI : MonoBehaviour
                 yield return null;
             }
         }
+          group.alpha = 0f;
+       // gameObject.SetActive(false);
 
-        group.alpha = 0f;
-        gameObject.SetActive(false);
     }
+    
 
 }
