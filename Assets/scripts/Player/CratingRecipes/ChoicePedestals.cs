@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.Mathematics;
 public class ChoicePedestals : MonoBehaviour
 {
       public CraftingRecipeSO recipe;
@@ -8,22 +9,25 @@ public class ChoicePedestals : MonoBehaviour
     public TMP_Text promptText;
     public GameObject hightlightVFX;
 
-    private PlayerIdentity _P1ID, _P2ID;
+    private int _occupantCount = 0;
 
     private void Awake()
     {
         SetPrompt(false);
         if (hightlightVFX) hightlightVFX.SetActive(false);
+
+         if (promptText && recipe)
+            promptText.text = $"Make <b>{recipe.name}</b>?\n<alpha=#AA>Confirm = choose\nCancel = back";
     }
 
-    private void OTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        var id = other.GetComponentInParent<PlayerIdentity>();
-        if (!id) return;
+        var chooser = other.GetComponentInParent<PlayerChoice>();
+        if (!chooser) return;
 
-        if (id.playerIndex == 0) _P1ID = id;
-        if (id.playerIndex == 1) _P2ID = id;
-
+        _occupantCount++;
+        chooser.EnterPedestal(this);
+        
         SetPrompt(true);
 
         if (hightlightVFX)
@@ -32,15 +36,15 @@ public class ChoicePedestals : MonoBehaviour
         }
     }
 
-    private void OTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        var id = other.GetComponentInParent<PlayerIdentity>();
-        if (!id) return;
+        var chooser = other.GetComponentInParent<PlayerChoice>();
+        if (!chooser) return;
 
-        if (id.playerIndex == 0) _P1ID = null;
-        if (id.playerIndex == 1) _P2ID = null;
+        _occupantCount = Mathf.Max(0, _occupantCount - 1);
+        chooser.ExitPedestal(this);
 
-        if (_P1ID == null && _P2ID == null)
+        if (_occupantCount == 0)
         {
             SetPrompt(false);
             if (hightlightVFX)
@@ -50,46 +54,13 @@ public class ChoicePedestals : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (!_P1ID && !_P2ID) return;
-
-        bool confirm = UnityEngine.InputSystem.Keyboard.current?.enterKey.wasPressedThisFrame == true
-                         || UnityEngine.InputSystem.Gamepad.current?.buttonSouth.wasPressedThisFrame == true;
-
-        bool cancel = UnityEngine.InputSystem.Keyboard.current?.backspaceKey.wasPressedThisFrame == true
-                        || UnityEngine.InputSystem.Gamepad.current?.buttonEast.wasPressedThisFrame == true;
-
-
-        if (confirm)
-        {
-            if (_P1ID) MatchManger.Instance?.ConfirmRecipeForPlayer(0, recipe);
-            if (_P2ID) MatchManger.Instance?.ConfirmRecipeForPlayer(1, recipe);
-
-            SetPrompt(false); //autohide after chosen
-
-            if (hightlightVFX)
-            {
-                hightlightVFX.SetActive(false);
-            }
-        }
-        // else if (cancel)
-        // {
-        //     if (_P1ID) MatchManger.Instance?.ClearRecipeForPlayer(0, recipe);
-        //     if (_P2ID) MatchManger.Instance?.ClearRecipeForPlayer(1, recipe);
-        // }
-    }
-
     private void SetPrompt(bool show)
     {
         if (promptCanvas)
         {
-            promptCanvas.enabled = show;
+            promptCanvas.gameObject.SetActive(show);
         }
 
-        if (promptText && recipe)
-        {
-            promptText.text = $"Make **{recipe.name}**?\n<alpha=#AA>Enter / A = choose\nBackSpace / O = back";
-        }
+      
     }
 }

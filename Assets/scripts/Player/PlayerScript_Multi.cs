@@ -128,7 +128,7 @@ public class PlayerScript_Multi : MonoBehaviour
 
     void Move()
     {
-        if (rb.isKinematic) return; 
+        // if (rb.isKinematic) return; 
 
         Vector3 camForward = Vector3.forward;
         Vector3 camRight   = Vector3.right;

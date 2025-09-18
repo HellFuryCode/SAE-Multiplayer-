@@ -38,7 +38,7 @@ public class MatchManger : MonoBehaviour
 
     private void Start()
     {
-        if (camRig) camRig.inputLocked = true;
+       // if (camRig) camRig.inputLocked = true;
         if (startWall) startWall.SetActive(true);
 
         SetRecipeUI(0, null);
@@ -109,8 +109,21 @@ public class MatchManger : MonoBehaviour
             StartCoroutine(BeginCountdownThenStart());
         }
     }
+    
+     public void ClearRecipeForPlayer(int playerIndex)
+    {
+        if (playerIndex == 0)
+        {
+            _p1Chosen = null; SetRecipeUI(0, null);
+        }
+        else if (playerIndex == 1)
+        {
+            _p2Chosen = null; SetRecipeUI(1, null);
+        }
+    }
 
- private  IEnumerator BeginCountdownThenStart()
+
+ private IEnumerator BeginCountdownThenStart()
     {
         var seq = new[]
         {
@@ -120,7 +133,7 @@ public class MatchManger : MonoBehaviour
         if (countdown) yield return StartCoroutine(countdown.PlayCountDown(seq)); //bitch 
 
         if (startWall) startWall.SetActive(false);
-        if (camRig) camRig.inputLocked = false;
+      //  if (camRig) camRig.inputLocked = false;
 
         _timeLeft = roundSeconds;
         _roundRunning = true;

@@ -21,6 +21,6 @@ public class PlayerChoice : MonoBehaviour
     public void OnCancel(InputValue v)
     {
         if (!v.isPressed) return;
-  
+          MatchManger.Instance?.ClearRecipeForPlayer(_id.playerIndex);
     }
 }
