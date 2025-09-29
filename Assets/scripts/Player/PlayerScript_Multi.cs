@@ -261,3 +261,19 @@ public class PlayerScript_Multi : MonoBehaviour
     }
 #endif
 }
+
+// How To Make A HORROR Game In Unity 
+//date accessed 2025/9/17
+//created by: User1 Productions
+//created on: 2022
+//url: https://www.youtube.com/watch?v=qRgKB8l9GIg&list=PLlcgaDpDEvw05IgKGZo9FYA8Fo38RtAqH&index=24
+//Online Video
+//youtube
+
+//  Unity Input System in Unity 6 (1/7): Input Action Editor.
+//date accessed 2025/9/17
+//created by: Unity
+//created on: 2025
+//url: https://www.youtube.com/watch?v=TiTKAseu17A 
+//Online Video
+//youtube

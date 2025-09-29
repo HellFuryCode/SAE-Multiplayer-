@@ -105,6 +105,50 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: cc5f552d36f79c149825c2f624eeca3d, type: 2}
+    - target: {fileID: 3506932182785401719, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Size.x
+      value: 0.13711141
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506932182785401719, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Size.z
+      value: 0.107932396
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506932182785401719, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506932182785401719, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Center.x
+      value: 0.004897497
+      objectReference: {fileID: 0}
+    - target: {fileID: 3506932182785401719, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0097815
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747790825377931158, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Size.x
+      value: 0.0248954
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747790825377931158, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Size.y
+      value: 0.11132728
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747790825377931158, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747790825377931158, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Center.x
+      value: 0.074968755
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747790825377931158, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_Center.y
+      value: 0.05566368
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747790825377931158, guid: 165f5a4eb9c1b2e40b2ec321b0fd68bb, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 640
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class IngredientPool : MonoBehaviour
 {
-   public ItemPickup prefab;
+    public ItemPickup prefab;
     public int initialSize = 16;
     public bool allowExpand = true;
 
@@ -21,7 +21,7 @@ public class IngredientPool : MonoBehaviour
             Debug.LogError("[IngredientPool] Missing Prefab");
             enabled = false; return;
         }
-        
+
         for (int i = 0; i < initialSize; i++)
         {
             _pool.Enqueue(CreateNew());
@@ -73,3 +73,19 @@ public class IngredientPool : MonoBehaviour
 
 
 }
+
+// How To Make A HORROR Game In Unity | Basic Health System | Horror Series Part 024
+//date accessed 2025/9/17
+//created by: User1 Productions
+//created on: 2022
+//url: https://www.youtube.com/watch?v=qRgKB8l9GIg&list=PLlcgaDpDEvw05IgKGZo9FYA8Fo38RtAqH&index=24
+//Online Video
+//youtube
+
+// Awesome UNIQUE Crafting System! (Max Immersion, No Inventory, Hydroneer, Unity Tutorial
+//date accessed 2025/9/17
+//created by: Code monkey
+//created on: 2022
+//url: https://www.youtube.com/watch?v=_aC3NVIQ-ok 
+//Online Video
+//youtube

@@ -78,3 +78,11 @@ public class RadialHoldUI : MonoBehaviour
         done?.Invoke(idx);
     }
 }
+
+// How To Make A HORROR Game In Unity | Basic Health System | Horror Series Part 024
+//date accessed 2025/9/17
+//created by: User1 Productions
+//created on: 2022
+//url: https://www.youtube.com/watch?v=qRgKB8l9GIg&list=PLlcgaDpDEvw05IgKGZo9FYA8Fo38RtAqH&index=24
+//Online Video
+//youtube

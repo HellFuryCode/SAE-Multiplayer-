@@ -85,5 +85,19 @@ public class IgredientsSpwaner : MonoBehaviour
 
     }
 //no adding here
+// How To Make A HORROR Game In Unity | Basic Health System | Horror Series Part 024
+//date accessed 2025/9/17
+//created by: User1 Productions
+//created on: 2022
+//url: https://www.youtube.com/watch?v=qRgKB8l9GIg&list=PLlcgaDpDEvw05IgKGZo9FYA8Fo38RtAqH&index=24
+//Online Video
+//youtube
 
+// Awesome UNIQUE Crafting System! (Max Immersion, No Inventory, Hydroneer, Unity Tutorial
+//date accessed 2025/9/17
+//created by: Code monkey
+//created on: 2022
+//url: https://www.youtube.com/watch?v=_aC3NVIQ-ok 
+//Online Video
+//youtube
 

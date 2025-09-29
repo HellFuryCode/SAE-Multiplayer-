@@ -247,3 +247,18 @@ public class CamFollow2Players : MonoBehaviour
     }
 }
 
+//Easy Split Screen
+//date accessed 2025/9/17
+//created by: Bit gamey
+//created on: 2022
+//url: https://assetstore.unity.com/packages/tools/camera/easy-split-screen-191084 
+//Online asset from unity
+//Unity asset store
+
+// Tutorial: How to Add Couch Co-Op to Your Unity 6 Game (No Networking!)
+//date accessed 2025/9/17
+//created by: Faktory Studios
+//created on: 2025
+//url: https://www.youtube.com/watch?v=u3KoWI92blE  
+//Online
+//youtube

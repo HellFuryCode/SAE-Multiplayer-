@@ -4,9 +4,9 @@ using Unity.Mathematics;
 
 public class ChoicePedestals : MonoBehaviour
 {
-      public CraftingRecipeSO recipe;
+    public CraftingRecipeSO recipe;
 
-      //ui
+    //ui
     public Canvas promptCanvas;
     public TMP_Text promptText;
     public GameObject hightlightVFX;
@@ -23,8 +23,8 @@ public class ChoicePedestals : MonoBehaviour
             if (!_group) _group = promptCanvas.gameObject.AddComponent<CanvasGroup>();
         }
 
-         if (promptText && recipe)
-                promptText.text = $"Make <b>{recipe.name}</b>?\n<alpha=#AA>Confirm = choose\nCancel = back";
+        if (promptText && recipe)
+            promptText.text = $"Make <b>{recipe.name}</b>?\n<alpha=#AA>Confirm = choose\nCancel = back";
 
         SetPrompt(false);
         if (hightlightVFX) hightlightVFX.SetActive(false);
@@ -42,7 +42,7 @@ public class ChoicePedestals : MonoBehaviour
         {
             holdUI.Begin(id.playerIndex, OnHoldFinshed);
         }
-     
+
 
         if (hightlightVFX)
         {
@@ -57,7 +57,7 @@ public class ChoicePedestals : MonoBehaviour
 
         _occupantCount = Mathf.Max(0, _occupantCount - 1);
 
-          if (holdUI)
+        if (holdUI)
         {
             holdUI.Cancel(id.playerIndex);
         }
@@ -99,3 +99,4 @@ public class ChoicePedestals : MonoBehaviour
 
     }
 }
+

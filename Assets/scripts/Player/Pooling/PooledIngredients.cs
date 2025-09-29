@@ -38,3 +38,11 @@ public class PooledIngredients : MonoBehaviour
         originPool.Return(_pickup);
     }
 }
+
+// Unity Object Pooling Made Easy: Learn to Manage Spawns Like a Pro 
+//date accessed 2025/9/17
+//created by: Sasquatch B studios
+//created on: 2023
+//url: https://www.youtube.com/watch?v=9O7uqbEe-xc&list=PLM_ItQtRF47HNo9Ddkviol9mlIMRcMNTQ&index=2 
+//Online Video
+//youtube

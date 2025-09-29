@@ -34,9 +34,9 @@ public class CraftingBowl : MonoBehaviour
         }
 
         if (bowlTrigger)
-            {
-                bowlTrigger.isTrigger = true;
-            }
+        {
+            bowlTrigger.isTrigger = true;
+        }
 
 
         if (recipe && recipeImage)
@@ -66,15 +66,15 @@ public class CraftingBowl : MonoBehaviour
         if (!pickup || pickup.data == null) return;
 
         contents.Add(pickup);
-         Debug.Log($"[Bowl] + {pickup.data.kind}  (total={contents.Count})");
-        
+        Debug.Log($"[Bowl] + {pickup.data.kind}  (total={contents.Count})");
+
     }
 
     public void TryRemove(Collider c)
     {
         var pickup = c.GetComponentInParent<ItemPickup>();
         if (pickup) contents.Remove(pickup);
-         if (pickup) Debug.Log($"[Bowl] - {pickup.data.kind}  (total={contents.Count})");
+        if (pickup) Debug.Log($"[Bowl] - {pickup.data.kind}  (total={contents.Count})");
     }
 
     public void TryAutoCraft() //crafting logic //aka the motherfucker who messes everythibng uuuuuup
@@ -122,7 +122,7 @@ public class CraftingBowl : MonoBehaviour
     }
 
 
-    private void  ConsumeRequired(Dictionary<ItemData.ItemKind, int> need)
+    private void ConsumeRequired(Dictionary<ItemData.ItemKind, int> need)
     {
         var toRemove = new List<ItemPickup>();
 
@@ -173,9 +173,17 @@ public class CraftingBowl : MonoBehaviour
     public void SetRecipe(CraftingRecipeSO newRecipe)
     {
         recipe = newRecipe;
-        if (recipeImage && recipe)  recipeImage.sprite = recipe.sprite;
-            contents.Clear();
+        if (recipeImage && recipe) recipeImage.sprite = recipe.sprite;
+        contents.Clear();
 
     }
 
 }
+
+// Awesome UNIQUE Crafting System! (Max Immersion, No Inventory, Hydroneer, Unity Tutorial
+//date accessed 2025/9/17
+//created by: Code monkey
+//created on: 2022
+//url: https://www.youtube.com/watch?v=_aC3NVIQ-ok 
+//Online Video
+//youtube

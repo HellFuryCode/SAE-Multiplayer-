@@ -10,3 +10,4 @@ public class PlayerIdentity : MonoBehaviour
 
     public string displayName = "player 1";
 }
+
