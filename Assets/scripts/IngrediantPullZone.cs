@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class IngrediantPullZone : MonoBehaviour
 {
     //what to pull depending on the tags
-    public string[] allowedTags = new string[] { "Ingredient", "Collectible" };
+    public string[] allowedTags = new string[] { "PickUp" };
     public LayerMask affectedLayers = ~0;
 
     public bool requireNotHeld = true;
