@@ -15128,6 +15128,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3896984266231441601, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2235244001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3896984266231441601, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
+      propertyPath: SceneMigrationSynchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3896984266231441601, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1515728208
+      objectReference: {fileID: 0}
     - target: {fileID: 4729534711752174466, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
       propertyPath: m_Layer
       value: 8

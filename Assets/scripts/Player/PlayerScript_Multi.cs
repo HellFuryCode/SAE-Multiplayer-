@@ -1,8 +1,10 @@
 using System;
 using UnityEngine;
+using Unity.Netcode;
 using UnityEngine.InputSystem;
 
-public class PlayerScript_Multi : MonoBehaviour
+
+public class PlayerScript_Multi : NetworkBehaviour
 {
     //camrea
     public Transform Camera;
@@ -183,7 +185,15 @@ public class PlayerScript_Multi : MonoBehaviour
         }
     }
 
-
+    // public override void OnNetWorkSpawn()
+    // {
+    //     if (!IsOwner)
+    //     {
+    //         enabled = false;
+    //         return;
+    //         }
+    // }
+    
     private void AlignToCameraTwist()
     {
         if (!Camera) return;
@@ -196,8 +206,8 @@ public class PlayerScript_Multi : MonoBehaviour
             Quaternion target = Quaternion.LookRotation(camFwd.normalized, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * faceCamLerp);
         }
-    
- }
+
+    }
 
 
 
