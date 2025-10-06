@@ -1,5 +1,120 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1105118739501708821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5603688452955159281}
+  - component: {fileID: 6700969158778128671}
+  - component: {fileID: 3838812190824231227}
+  m_Layer: 0
+  m_Name: AttractPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5603688452955159281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105118739501708821}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5004, y: 0.72, z: -0.7}
+  m_LocalScale: {x: 0.033333335, y: 0.05, z: 0.033333335}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6693173843607449365}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6700969158778128671
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105118739501708821}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.806582
+  m_Height: 4.287734
+  m_Direction: 1
+  m_Center: {x: 0.0074772835, y: 1.643867, z: 0}
+--- !u!114 &3838812190824231227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105118739501708821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6c20e1426ad254bbfaaa13cab00a3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowedTags:
+  - Ingredient
+  - Collectible
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  requireNotHeld: 1
+  attractionPoint: {fileID: 5603688452955159281}
+  pullStrength: 30
+  maxAcceleration: 60
+  distanceFalloff:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  snapDistance: 0.25
+  snapSpeed: 10
+  consumeDistance: 0.1
+  destroyOnConsume: 1
+  OnObjectEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectExit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnObjectConsumed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1718894889434527047
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,6 +146,7 @@ Transform:
   m_Children:
   - {fileID: 8590965128478522274}
   - {fileID: 2834041686247097571}
+  - {fileID: 5603688452955159281}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2439438604457314572
