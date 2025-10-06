@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1491798967173862947}
   - component: {fileID: 3699452042899727081}
   - component: {fileID: 6257935580346192367}
+  - component: {fileID: 2534520461401321660}
   - component: {fileID: 45942640913851922}
   m_Layer: 0
   m_Name: FreeBowl01
@@ -109,6 +110,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.17483214, y: 0.1141147, z: 0.17483217}
   m_Center: {x: -0.000000052154064, y: 0.057057388, z: 0}
+--- !u!65 &2534520461401321660
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2907043290250347324}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.17483214, y: 0.1141147, z: 0.17483217}
+  m_Center: {x: 0.000000067055225, y: 0.057057448, z: 0}
 --- !u!114 &45942640913851922
 MonoBehaviour:
   m_ObjectHideFlags: 0
