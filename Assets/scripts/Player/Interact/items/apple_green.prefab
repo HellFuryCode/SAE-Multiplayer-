@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 3110440165709301387}
   - component: {fileID: 5006327557629064660}
   - component: {fileID: 7775201534990431208}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: apple_green
-  m_TagString: Untagged
+  m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

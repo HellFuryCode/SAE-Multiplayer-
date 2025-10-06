@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: watermelon_quart Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1613769841287687326, guid: 380438c0a791c004c8b183495da0a615, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613769841287687326, guid: 380438c0a791c004c8b183495da0a615, type: 3}
+      propertyPath: m_TagString
+      value: PickUp
+      objectReference: {fileID: 0}
     - target: {fileID: 1996371512356427255, guid: 380438c0a791c004c8b183495da0a615, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.2500845
