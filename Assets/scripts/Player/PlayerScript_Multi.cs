@@ -6,23 +6,26 @@ using UnityEngine.InputSystem;
 
 public class PlayerScript_Multi : NetworkBehaviour
 {
+    // coop
+    public enum KeyboardProfile { None, WASD, Arrows }
+    public KeyboardProfile keyboardProfile = KeyboardProfile.None;
+
+
     //camrea
     public Transform Camera;
     public Vector2 lookInput;          
    private Vector3 originalForward;  //true north essenrtionally 
-
     [SerializeField] float faceCamLerp = 12f;  //how quick is the roate in the yaw (twisiting in vertail)
 
     // movemnet
     [SerializeField] public float moveSpeed = 5f;
     [SerializeField] public float sprintSpeed = 8f;  //shift / r2
     [SerializeField] public float TurnSmoothTime = 0.1f;
-   
-       private float TurnSmoothVel;
+    private float TurnSmoothVel;
     private Vector2 moveInput;                              // WASD & left stick on controller
     private Rigidbody rb;                      
-   
-    private bool usePlayerInput;                           //keyboard 
+   // private bool usePlayerInput;                           //keyboard 
+
 
     //Jump 
     public float jumpForce = 10f;                           
@@ -49,7 +52,8 @@ public class PlayerScript_Multi : NetworkBehaviour
     // Input
     private InputSystem_Actions inputActions;              
     private PlayerInput playerInput;        //for the multi     
-
+    private bool usePlayerInput => playerInput != null && playerInput.enabled;
+    private bool IsManualKeyboard => keyboardProfile != KeyboardProfile.None;
 
 
     void Awake()
@@ -60,14 +64,14 @@ public class PlayerScript_Multi : NetworkBehaviour
 
 
         playerInput = GetComponent<PlayerInput>();
-        {
-            usePlayerInput = playerInput != null;
-        }
+        // {
+        //     usePlayerInput = playerInput != null;
+        // }
 
-        if (!usePlayerInput)
-            {
-                inputActions = new InputSystem_Actions();
-            }
+        // if (!usePlayerInput)
+        //     {
+        //         inputActions = new InputSystem_Actions();
+        //     }
     }
 
     void OnEnable()
@@ -83,7 +87,7 @@ public class PlayerScript_Multi : NetworkBehaviour
             inputActions.Player.Sprint.canceled  += ctx => sprintHeld = false;
         }
 
-        stamina = maxStamina;
+     
     }
 
  
@@ -98,7 +102,11 @@ public class PlayerScript_Multi : NetworkBehaviour
 
     void Start()
     {
-     
+        // if (!Camera && Camera.main)
+        // {
+        //     Camera = Camera.main.transform;
+        // }
+
         float playerHeight = 2f;
         if (TryGetComponent<CapsuleCollider>(out var cap))
         {
@@ -109,12 +117,16 @@ public class PlayerScript_Multi : NetworkBehaviour
 
         startYScale = transform.localScale.y;
         originalForward = transform.forward;
+           stamina = maxStamina;
     }
 
     void Update()
     {
-        if (!usePlayerInput)
-            moveInput = inputActions.Player.Move.ReadValue<Vector2>();
+        if (IsManualKeyboard)
+        {
+            if (keyboardProfile == KeyboardProfile.WASD) ReadWASD();
+            else if (keyboardProfile == KeyboardProfile.Arrows) ReadArrows();
+        }
 
         Sprint();
  
@@ -122,11 +134,68 @@ public class PlayerScript_Multi : NetworkBehaviour
 
     void FixedUpdate()
     {
-
-
         Move();
         ApplyJumpPhysics(); 
     }
+
+    private void ReadWASD() //maunal readers for split keyboard
+    {
+        var kb = Keyboard.current;
+        if (kb == null)
+        {
+            return;
+        }
+
+        float x = 0f, y = 0f;
+        if (kb.wKey.isPressed) y += 1f;
+        if (kb.sKey.isPressed) y -= 1f;
+        if (kb.dKey.isPressed) y += 1f;
+        if (kb.aKey.isPressed) y -= 1f;
+
+        moveInput = new Vector2(x, y).normalized;
+
+        if (kb.spaceKey.wasPressedThisFrame)
+        {
+            Jump();
+            sprintHeld = kb.leftShiftKey.isPressed;
+        }
+
+        if (kb.cKey.wasPressedThisFrame)
+        {
+            Crouch();
+        }
+
+    }
+
+      private void ReadArrows() //maunal readers for split keyboard
+    {
+        var kb = Keyboard.current;
+        if (kb == null)
+        {
+            return;
+        }
+
+        float x = 0f, y = 0f;
+        if (kb.upArrowKey.isPressed) y += 1f;
+        if (kb.downArrowKey.isPressed) y -= 1f;
+        if (kb.rightArrowKey.isPressed) y += 1f;
+        if (kb.leftArrowKey.isPressed) y -= 1f;
+
+        moveInput = new Vector2(x, y).normalized;
+
+        if (kb.enterKey.wasPressedThisFrame || kb.rightCtrlKey.wasPressedThisFrame)
+        {
+            Jump();
+            sprintHeld = kb.rightShiftKey.isPressed;
+        }
+
+        if (kb.rightAltKey.wasPressedThisFrame || kb.slashKey.wasPressedThisFrame)
+        {
+            Crouch();
+        }
+
+    }
+
 
     void Move()
     {
@@ -255,12 +324,18 @@ public class PlayerScript_Multi : NetworkBehaviour
     {
         lookInput = value.Get<Vector2>();
     }
+ // PlayerInput  (controllers only) 
+    public void Look(InputValue value)   { if (usePlayerInput && !IsManualKeyboard) lookInput = value.Get<Vector2>(); }
+    public void OnMove(InputValue value)   { if (usePlayerInput && !IsManualKeyboard) moveInput = value.Get<Vector2>(); }
+    public void OnJump(InputValue value)   { if (usePlayerInput && !IsManualKeyboard && value.isPressed) Jump(); }
+    public void OnSprint(InputValue value) { if (usePlayerInput && !IsManualKeyboard) sprintHeld = value.isPressed; }
+    public void OnCrouch(InputValue value) { if (usePlayerInput && !IsManualKeyboard && value.isPressed) Crouch(); }
 
-    // PlayerInput (local multiplayer which kinda works ehhh)
-    public void OnMove(InputValue value) => moveInput = value.Get<Vector2>();
-    public void OnJump(InputValue value)  { if (value.isPressed) Jump(); }
-    public void OnSprint(InputValue value){ sprintHeld = value.isPressed; }
-    public void OnCrouch(InputValue value){ if (value.isPressed) Crouch(); }
+    // Netcode: only owner should read input online
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner) enabled = false;
+    }
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()

@@ -5619,6 +5619,7 @@ Transform:
   - {fileID: 1803673542}
   - {fileID: 1169524872}
   - {fileID: 816943256}
+  - {fileID: 1791193096}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &753174233
@@ -12823,6 +12824,82 @@ Transform:
   m_Children: []
   m_Father: {fileID: 880360567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1791193095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1791193096}
+  - component: {fileID: 1791193097}
+  m_Layer: 0
+  m_Name: PlayerInputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1791193096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791193095}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 746405579}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1791193097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791193095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NotificationBehavior: 0
+  m_MaxPlayerCount: -1
+  m_AllowJoining: 1
+  m_JoinBehavior: 0
+  m_PlayerJoinedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_PlayerLeftEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_JoinAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 67448e3a-b357-4cdc-a876-4d8ce6283a93
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  m_PlayerPrefab: {fileID: 1197688133}
+  m_SplitScreen: 0
+  m_MaintainAspectRatioInSplitScreen: 0
+  m_FixedNumberOfSplitScreens: -1
+  m_SplitScreenRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &1796053878
 GameObject:
   m_ObjectHideFlags: 0
@@ -14912,12 +14989,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4931889769318326600, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
+      propertyPath: interactRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4931889769318326600, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
       propertyPath: showDropPrompt
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4931889769318326600, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
       propertyPath: pickupMask.m_Bits
-      value: 4294967295
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 4931889769318326600, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
       propertyPath: originHeightOffset
@@ -14981,7 +15062,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9108746343783265458, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
       propertyPath: m_Height
-      value: 1.885457
+      value: 1.8027029
       objectReference: {fileID: 0}
     - target: {fileID: 9108746343783265458, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
       propertyPath: m_Center.x
@@ -14989,7 +15070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9108746343783265458, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
       propertyPath: m_Center.y
-      value: 0.05727148
+      value: 0.46680975
       objectReference: {fileID: 0}
     - target: {fileID: 9108746343783265458, guid: 96ef9ca8d8d79e646a67a1ddea4827b3, type: 3}
       propertyPath: m_Center.z
@@ -15688,12 +15769,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7345354566548665280, guid: fd150e8fb4ca39d488789107ceedd0a8, type: 3}
+      propertyPath: interactRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7345354566548665280, guid: fd150e8fb4ca39d488789107ceedd0a8, type: 3}
       propertyPath: showDropPrompt
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7345354566548665280, guid: fd150e8fb4ca39d488789107ceedd0a8, type: 3}
+      propertyPath: showGizmosAlways
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7345354566548665280, guid: fd150e8fb4ca39d488789107ceedd0a8, type: 3}
       propertyPath: pickupMask.m_Bits
-      value: 4294967295
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 7345354566548665280, guid: fd150e8fb4ca39d488789107ceedd0a8, type: 3}
       propertyPath: originHeightOffset

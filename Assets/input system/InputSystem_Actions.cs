@@ -173,13 +173,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Arrows"",
-                    ""type"": ""Value"",
-                    ""id"": ""b4e72a93-1e9f-4955-bc87-b3a3167c31db"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""655cc6d5-caf3-4780-b94b-c21d2a657aae"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -217,7 +217,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""WASD"",
+                    ""name"": ""KB1_WASD"",
                     ""id"": ""00ca640b-d935-4593-8157-c05846ea39b3"",
                     ""path"": ""Dpad"",
                     ""interactions"": """",
@@ -272,7 +272,62 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
+                    ""name"": ""KB2_Arrows"",
+                    ""id"": ""5b2bf625-8528-49de-b507-31269e4159ac"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""075f121a-2dcd-454c-8867-2e5e637435fa"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""58f6e682-d7a1-40df-a591-fe70538709f7"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a1cec2ed-accb-474e-ad63-e601227685e2"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""3bed6773-448b-484e-bf81-05c63b8d3b42"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
                     ""id"": ""c1f7a91b-d0fd-4a62-997e-7fb9b69bf235"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
@@ -559,45 +614,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""944d166a-72f5-4ef4-a1b4-ea81d02688b8"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""id"": ""9632abb4-b27a-49dd-bcd5-b90e6123919c"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Arrows"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7bc74ed1-fa3b-4e6a-9a3c-689a16f4d6da"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Arrows"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a7a22c8a-e5ea-4427-884a-4e08826bcb03"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Arrows"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0afff139-daab-4273-86e8-aff446c3eafe"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Arrows"",
+                    ""groups"": """",
+                    ""action"": ""New action"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1194,7 +1216,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        m_Player_Arrows = m_Player.FindAction("Arrows", throwIfNotFound: true);
+        m_Player_Newaction = m_Player.FindAction("New action", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1297,7 +1319,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Previous;
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
-    private readonly InputAction m_Player_Arrows;
+    private readonly InputAction m_Player_Newaction;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1346,9 +1368,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Arrows".
+        /// Provides access to the underlying input action "Player/Newaction".
         /// </summary>
-        public InputAction @Arrows => m_Wrapper.m_Player_Arrows;
+        public InputAction @Newaction => m_Wrapper.m_Player_Newaction;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1402,9 +1424,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @Arrows.started += instance.OnArrows;
-            @Arrows.performed += instance.OnArrows;
-            @Arrows.canceled += instance.OnArrows;
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
         }
 
         /// <summary>
@@ -1443,9 +1465,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @Arrows.started -= instance.OnArrows;
-            @Arrows.performed -= instance.OnArrows;
-            @Arrows.canceled -= instance.OnArrows;
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
         }
 
         /// <summary>
@@ -1810,12 +1832,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Arrows" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "New action" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnArrows(InputAction.CallbackContext context);
+        void OnNewaction(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
