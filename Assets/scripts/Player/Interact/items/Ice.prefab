@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c5f361b797097c4684526836394fded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 356edc9fe20ad294cbdef387f4675fc2, type: 2}
   lastHolder: {fileID: 0}
   rb: {fileID: 0}
   col: {fileID: 0}

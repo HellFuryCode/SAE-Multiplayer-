@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 98841567900234547, guid: 380438c0a791c004c8b183495da0a615, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 3cd4fe0313b6e674798c372872919eb2, type: 2}
     - target: {fileID: 1613769841287687326, guid: 380438c0a791c004c8b183495da0a615, type: 3}
       propertyPath: m_Name
       value: watermelon_quart Variant
@@ -63,6 +67,10 @@ PrefabInstance:
     - target: {fileID: 1996371512356427255, guid: 380438c0a791c004c8b183495da0a615, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7435235697547514503, guid: 380438c0a791c004c8b183495da0a615, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
