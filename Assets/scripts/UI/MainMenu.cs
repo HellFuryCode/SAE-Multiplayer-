@@ -1,19 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu: MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
-  public void PlayGame()
+    public void PlayLocalCoop()
     {
-        SceneManager.LoadSceneAsync(1);
+      GameSessions.Instance.Mode = GameSessions.GameMode.Local;
+        SceneManager.LoadSceneAsync("LocalCoop"); // scene 1
     }
 
- 
+    public void GoOnlineMenu()
+    {
+        SceneManager.LoadSceneAsync("OnlineMenu"); // scene 2
+    }
+
     public void QuitGame()
     {
-        Debug.Log ("Game Quit");
-    //    Application.Quit();
+        Debug.Log("Quit Game");
+        // Application.Quit(); // enable in build
     }
 }
