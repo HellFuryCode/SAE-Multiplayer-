@@ -14,28 +14,23 @@ public class LocalCoOpBinder : MonoBehaviour
         }
     }
 
-    public void Register(PlayerScript_Multi pm)
-    {
-        if (!pm || players.Contains(pm))
-        {
-            return;
-        }
+  public int Register(PlayerScript_Multi pm)
+{
+    if (!pm) return -1;
 
+    if (!players.Contains(pm))
         players.Add(pm);
 
-        if (cam)
-        {
-            if (players.Count >= 1)
-            {
-                cam.player1 = players[0].transform;
-            }
+    // which slot did this player take? (0 = P1, 1 = P2)
+    int slot = Mathf.Clamp(players.IndexOf(pm), 0, 1);
 
-            if (players.Count >= 2)
-            {
-                cam.player2 = players[1].transform;
-            }
-        }
+    if (cam)
+    {
+        if (slot == 0) cam.player1 = pm.transform;
+        else           cam.player2 = pm.transform;
     }
+    return slot;
+}
 
     public int Count => players.Count;
 

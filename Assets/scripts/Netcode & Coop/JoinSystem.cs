@@ -18,7 +18,7 @@ public class JoinSystem : MonoBehaviour
     public Key kb2JoinKey = Key.Enter; //joins player with arrows
 
     public CharacterChoice nextJoinCharacter = CharacterChoice.A;
-
+    public System.Action<int> OnLocalPlayerJoined;
     public UnityEngine.InputSystem.PlayerInputManager playerInputManager; //asssign in the inscpetor
 
     public int _NextSpawnIndex = 0;
@@ -135,6 +135,10 @@ public class JoinSystem : MonoBehaviour
         {
             kb2Taken = true;
         }
+
+            int slot = -1;
+        if (binder) slot = binder.Register(pm);
+        OnLocalPlayerJoined?.Invoke(slot);
     }
 
     private Transform GetNextSpawn()
@@ -169,5 +173,9 @@ public class JoinSystem : MonoBehaviour
         {
             binder.Register(pm);
         }
+
+        int slot = -1;
+        if (binder && pm) slot = binder.Register(pm);
+        OnLocalPlayerJoined?.Invoke(slot);
     }
 }
