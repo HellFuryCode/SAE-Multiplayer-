@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro; // if using TextMeshPro
+using TMPro; 
 
 public class OnlineMenuUI : MonoBehaviour
 {
-    public TMP_InputField ipField;             // assign in Inspector
-    public GameObject characterPrefabA;        // assign your A prefab
-    public GameObject characterPrefabB;        // assign your B prefab
+    public TMP_InputField ipField;             
+    public GameObject characterPrefabA;       
+    public GameObject characterPrefabB;      
     public bool chooseAByDefault = true;
 
     public void SelectCharacterA() { GameSessions.Instance.OnlinePlayerPrefab = characterPrefabA; }
@@ -14,7 +14,7 @@ public class OnlineMenuUI : MonoBehaviour
 
     void Start()
     {
-        // sensible defaults
+     
         if (GameSessions.Instance.OnlinePlayerPrefab == null)
             GameSessions.Instance.OnlinePlayerPrefab = chooseAByDefault ? characterPrefabA : characterPrefabB;
 
