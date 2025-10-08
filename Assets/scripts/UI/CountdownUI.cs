@@ -85,7 +85,7 @@ public class CountdownUI : MonoBehaviour
 
             //hide the text in the end
         group.alpha = 0f;
-        // gameObject.SetActive(false);
+     gameObject.SetActive(false);
 
     }
 

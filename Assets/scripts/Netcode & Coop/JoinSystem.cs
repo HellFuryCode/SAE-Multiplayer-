@@ -8,6 +8,7 @@ public class JoinSystem : MonoBehaviour
 {
     public enum CharacterChoice { A, B }
 
+    private LocalCoOpBinder binder;
     public GameObject playerPrefab_1_A;
     public GameObject playerPrefab_2_B;
 
@@ -37,7 +38,7 @@ public class JoinSystem : MonoBehaviour
 
     private void Start()
     {
-
+        binder = FindFirstObjectByType<LocalCoOpBinder>();
     }
 
 
@@ -97,6 +98,11 @@ public class JoinSystem : MonoBehaviour
 
     private void SpawnKeyboardPlayer(bool isKB1)
     {
+        if (binder && binder.Count >= 2)
+        {
+            return;  //cap at 2
+        }
+
         var prefab = (nextJoinCharacter == CharacterChoice.A) ? playerPrefab_1_A : playerPrefab_2_B;
 
         var spawn = GetNextSpawn();
@@ -106,7 +112,7 @@ public class JoinSystem : MonoBehaviour
         var pi = go.GetComponent<UnityEngine.InputSystem.PlayerInput>();
         if (pi)
         {
-            pi.enabled = false;
+            pi.enabled = false;  //keyboard players use manual inputs  wasd or arrows
         }
 
         var pm = go.GetComponent<PlayerScript_Multi>();
@@ -117,6 +123,7 @@ public class JoinSystem : MonoBehaviour
             : PlayerScript_Multi.KeyboardProfile.Arrows;
 
             if (!pm.Camera && Camera.main) pm.Camera = Camera.main.transform;
+            if (binder) binder.Register(pm);
         }
 
         if (isKB1)
@@ -142,7 +149,7 @@ public class JoinSystem : MonoBehaviour
         return t;
     }
 
-    public void OnPlayerJoined(UnityEngine.InputSystem.PlayerInput playerInput)
+    public void OnPlayerJoined(UnityEngine.InputSystem.PlayerInput playerInput)  //controllers aka the better way to play
     {
         var pm = playerInput.GetComponent<PlayerScript_Multi>();
 
@@ -156,6 +163,11 @@ public class JoinSystem : MonoBehaviour
         if (pad != null)
         {
             joinedPads.Add(pad);
+        }
+
+        if (binder)
+        {
+            binder.Register(pm);
         }
     }
 }

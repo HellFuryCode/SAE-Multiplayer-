@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
+using Unity.Collections;
 
 
 public class PlayerScript_Multi : NetworkBehaviour
@@ -149,8 +150,8 @@ public class PlayerScript_Multi : NetworkBehaviour
         float x = 0f, y = 0f;
         if (kb.wKey.isPressed) y += 1f;
         if (kb.sKey.isPressed) y -= 1f;
-        if (kb.dKey.isPressed) y += 1f;
-        if (kb.aKey.isPressed) y -= 1f;
+        if (kb.dKey.isPressed) x += 1f;
+        if (kb.aKey.isPressed) x -= 1f;
 
         moveInput = new Vector2(x, y).normalized;
 
@@ -178,8 +179,8 @@ public class PlayerScript_Multi : NetworkBehaviour
         float x = 0f, y = 0f;
         if (kb.upArrowKey.isPressed) y += 1f;
         if (kb.downArrowKey.isPressed) y -= 1f;
-        if (kb.rightArrowKey.isPressed) y += 1f;
-        if (kb.leftArrowKey.isPressed) y -= 1f;
+        if (kb.rightArrowKey.isPressed) x += 1f;
+        if (kb.leftArrowKey.isPressed) x -= 1f;
 
         moveInput = new Vector2(x, y).normalized;
 

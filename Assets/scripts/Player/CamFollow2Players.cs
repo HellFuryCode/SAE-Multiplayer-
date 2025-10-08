@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class CamFollow2Players : MonoBehaviour
