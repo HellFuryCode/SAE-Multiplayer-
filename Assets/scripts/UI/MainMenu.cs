@@ -5,13 +5,13 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayLocalCoop()
     {
-      GameSessions.Instance.Mode = GameSessions.GameMode.Local;
-        SceneManager.LoadSceneAsync("LocalCoop"); // scene 1
+    //   GameSessions.Instance.Mode = GameSessions.GameMode.Local;
+        SceneManager.LoadSceneAsync("Local_GameScene");
     }
 
     public void GoOnlineMenu()
     {
-        SceneManager.LoadSceneAsync("OnlineMenu"); // scene 2
+        SceneManager.LoadSceneAsync("Online_GameScene"); // scene 2
     }
 
     public void QuitGame()

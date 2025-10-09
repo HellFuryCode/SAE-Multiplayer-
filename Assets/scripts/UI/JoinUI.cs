@@ -5,6 +5,8 @@ using System.Collections;
 
 public class JoinUI : MonoBehaviour
 {
+    public System.Action OnHidden;
+
     public TMP_Text titleText;
     public TMP_Text p1Text;
     public TMP_Text p2Text;
@@ -31,8 +33,8 @@ public class JoinUI : MonoBehaviour
         // reset texts every time we show this panel
         _p1Joined = _p2Joined = false;
         if (titleText) titleText.text = "Press to Join";
-        if (p1Text)    p1Text.text = "Player 1 — press <b>F</b> (WASD) or Controller <b>Start</b>";
-        if (p2Text)    p2Text.text = "Player 2 — press <b>Enter</b> (Arrows) or Controller <b>Start</b>";
+        if (p1Text) p1Text.text = "Player 1 — press <b>F</b> (WASD) or Controller <b>Start</b>";
+        if (p2Text) p2Text.text = "Player 2 — press <b>Enter</b> (Arrows) or Controller <b>Start</b>";
 
         // subscribe to JoinSystem (auto-find)
         var joinSys = FindFirstObjectByType<JoinSystem>();
@@ -47,7 +49,7 @@ public class JoinUI : MonoBehaviour
         var joinSys = FindFirstObjectByType<JoinSystem>();
         if (joinSys != null)
         {
-          joinSys.OnLocalPlayerJoined -= HandlePlayerJoined;
+            joinSys.OnLocalPlayerJoined -= HandlePlayerJoined;
         }
     }
 
@@ -108,10 +110,21 @@ public class JoinUI : MonoBehaviour
             yield return null;
         }
 
+
+    }
+
+    public void HideNow()
+    {
+        if (_hideCo != null)
+        {
+            StopCoroutine(_hideCo = null);
+        }
         _group.alpha = 0f;
         _group.interactable = false;
         _group.blocksRaycasts = false;
         gameObject.SetActive(false);
+        OnHidden.Invoke();
+         Debug.Log("[JoinUI] HideNow()"); ///bitvh
     }
 }
 

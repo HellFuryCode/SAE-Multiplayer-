@@ -1,78 +1,82 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
-using JetBrains.Annotations;
-using Unity.Services.Lobbies.Models;
 
 public class JoinSystem : MonoBehaviour
 {
     public enum CharacterChoice { A, B }
 
-    private LocalCoOpBinder binder;
+    [Header("Prefabs (LOCAL, non-networked)")]
     public GameObject playerPrefab_1_A;
     public GameObject playerPrefab_2_B;
 
+    [Header("Spawning")]
     public Transform[] spawnPoints;
 
-    public Key kb1JoinKey = Key.F;      //joins palyer with wasd
-    public Key kb2JoinKey = Key.Enter; //joins player with arrows
+    [Header("Keyboard Join Keys")]
+    public Key kb1JoinKey = Key.F;        // P1 (WASD)
+    public Key kb2JoinKey = Key.Enter;    // P2 (Arrows) – also handles Return/NumpadEnter/RightCtrl/RightShift
 
+    [Header("Controller Join (via PlayerInputManager)")]
+    public PlayerInputManager playerInputManager; // assign in inspector (optional; auto-found in Reset)
+
+    [Header("Character choice for NEXT join")]
     public CharacterChoice nextJoinCharacter = CharacterChoice.A;
-    public System.Action<int> OnLocalPlayerJoined;
-    public UnityEngine.InputSystem.PlayerInputManager playerInputManager; //asssign in the inscpetor
 
-    public int _NextSpawnIndex = 0;
+    // Event: slotIndex 0 => Player1, 1 => Player2
+    public System.Action<int> OnLocalPlayerJoined;
+
+    // --- internals ---
+    private LocalCoOpBinder binder;
+    private int _nextSpawnIndex = 0;
     private bool kb1Taken = false;
     private bool kb2Taken = false;
-
-    private HashSet<Gamepad> joinedPads = new HashSet<Gamepad>(); //shows which gamepades already joined (not nesscary if using PlayerinoutManger)
-
+    private readonly HashSet<Gamepad> joinedPads = new HashSet<Gamepad>();
 
     private void Reset()
     {
-        if (!playerInputManager)  //auto find
-        {
-            playerInputManager = FindAnyObjectByType<UnityEngine.InputSystem.PlayerInputManager>();
-        }
+        if (!playerInputManager)
+            playerInputManager = FindFirstObjectByType<PlayerInputManager>();
     }
 
     private void Start()
     {
         binder = FindFirstObjectByType<LocalCoOpBinder>();
+        ApplyNextPrefabToPIM(); // make sure controllers use the current selection
     }
-
 
     private void Update()
     {
-        //the keyboard joins 
         var kb = Keyboard.current;
-        if (kb != null)
+        if (kb == null) return;
+
+        // P1 (WASD) – single key join (default F)
+        if (!kb1Taken && kb[kb1JoinKey].wasPressedThisFrame)
         {
-            if (!kb1Taken && kb[kb1JoinKey].wasPressedThisFrame)
-            {
-                SpawnKeyboardPlayer(isKB1: true);
-            }
-
-            if (!kb2Taken && kb[kb2JoinKey].wasPressedThisFrame || kb.rightCtrlKey.wasPressedThisFrame)
-            {
-                SpawnKeyboardPlayer(isKB1: false);
-            }
-
-            if (kb != null)
-            {
-                if (kb.digit1Key.wasPressedThisFrame)
-                {
-                    ChooseCharacter_1_A();
-                }
-
-                if (kb.digit2Key.wasPressedThisFrame)
-                {
-                    ChooseCharacter_2_B();
-                }
-            }
+            SpawnKeyboardPlayer(isKB1: true);
+            Debug.Log("[Join] P1 keyboard join key pressed");
         }
+
+        // P2 (Arrows) – handle common variants + inspector key + RightCtrl/RightShift
+        bool p2JoinPressed =
+            kb.enterKey.wasPressedThisFrame ||
+            kb.numpadEnterKey.wasPressedThisFrame ||
+            kb.rightCtrlKey.wasPressedThisFrame ||
+            kb.rightShiftKey.wasPressedThisFrame ||
+            kb[kb2JoinKey].wasPressedThisFrame;
+
+        if (!kb2Taken && p2JoinPressed)
+        {
+            SpawnKeyboardPlayer(isKB1: false);
+            Debug.Log("[Join] P2 keyboard join key pressed");
+        }
+
+        // Optional hotkeys to flip next character (comment out if you don't want it)
+        if (kb.digit1Key.wasPressedThisFrame) ChooseCharacter_1_A();
+        if (kb.digit2Key.wasPressedThisFrame) ChooseCharacter_2_B();
     }
 
+    // ----- Character selection -----
     public void ChooseCharacter_1_A()
     {
         nextJoinCharacter = CharacterChoice.A;
@@ -85,97 +89,84 @@ public class JoinSystem : MonoBehaviour
         ApplyNextPrefabToPIM();
     }
 
-    private void ApplyNextPrefabToPIM()
+    private void FlipNext()
     {
-        if (!playerInputManager)
-        {
-            return;
-        }
-
-        playerInputManager.playerPrefab = (nextJoinCharacter == CharacterChoice.A) ? playerPrefab_1_A : playerPrefab_2_B;
+        nextJoinCharacter = (nextJoinCharacter == CharacterChoice.A) ? CharacterChoice.B : CharacterChoice.A;
+        ApplyNextPrefabToPIM();
     }
 
+    private void ApplyNextPrefabToPIM()
+    {
+        if (!playerInputManager) return;
 
+        playerInputManager.playerPrefab =
+            (nextJoinCharacter == CharacterChoice.A) ? playerPrefab_1_A : playerPrefab_2_B;
+    }
+
+    // ----- Spawning -----
     private void SpawnKeyboardPlayer(bool isKB1)
     {
-        if (binder && binder.Count >= 2)
-        {
-            return;  //cap at 2
-        }
+        if (binder && binder.Count >= 2) return; // cap at 2 players
 
         var prefab = (nextJoinCharacter == CharacterChoice.A) ? playerPrefab_1_A : playerPrefab_2_B;
-
         var spawn = GetNextSpawn();
 
         var go = Instantiate(prefab, spawn.position, spawn.rotation);
 
-        var pi = go.GetComponent<UnityEngine.InputSystem.PlayerInput>();
-        if (pi)
-        {
-            pi.enabled = false;  //keyboard players use manual inputs  wasd or arrows
-        }
+        // Disable PlayerInput for keyboard splits (manual readers in PlayerScript_Multi)
+        var pi = go.GetComponent<PlayerInput>();
+        if (pi) pi.enabled = false;
 
         var pm = go.GetComponent<PlayerScript_Multi>();
         if (pm)
         {
-            pm.keyboardProfile = isKB1
-            ? PlayerScript_Multi.KeyboardProfile.WASD
-            : PlayerScript_Multi.KeyboardProfile.Arrows;
+            pm.keyboardProfile = isKB1 ? PlayerScript_Multi.KeyboardProfile.WASD
+                                       : PlayerScript_Multi.KeyboardProfile.Arrows;
 
             if (!pm.Camera && Camera.main) pm.Camera = Camera.main.transform;
-            if (binder) binder.Register(pm);
         }
 
-        if (isKB1)
-        {
-            kb1Taken = true;
-        }
-
-        else
-        {
-            kb2Taken = true;
-        }
-
-            int slot = -1;
-        if (binder) slot = binder.Register(pm);
+        int slot = (binder && pm) ? binder.Register(pm) : -1;
         OnLocalPlayerJoined?.Invoke(slot);
+
+        if (isKB1) kb1Taken = true; else kb2Taken = true;
+
+        // Auto-alternate next join to the other character
+        FlipNext();
     }
 
     private Transform GetNextSpawn()
     {
-        if (spawnPoints == null || spawnPoints.Length == 0)
-        {
-            return transform;
-        }
-
-        var t = spawnPoints[_NextSpawnIndex % spawnPoints.Length];
-        _NextSpawnIndex++;
+        if (spawnPoints == null || spawnPoints.Length == 0) return transform;
+        var t = spawnPoints[_nextSpawnIndex % spawnPoints.Length];
+        _nextSpawnIndex++;
         return t;
     }
 
-    public void OnPlayerJoined(UnityEngine.InputSystem.PlayerInput playerInput)  //controllers aka the better way to play
+    // ----- PlayerInputManager callback (controllers) -----
+    public void OnPlayerJoined(PlayerInput playerInput)
     {
+        if (binder && binder.Count >= 2)
+        {
+            // Optional: kick/disable extra joins if you want a hard cap
+            Debug.LogWarning("[Join] Third controller tried to join, ignoring.");
+            return;
+        }
+
         var pm = playerInput.GetComponent<PlayerScript_Multi>();
-
         if (pm && !pm.Camera && Camera.main)
-        {
             pm.Camera = Camera.main.transform;
-        }
 
-        var pad = playerInput.devices.Count > 0 ? playerInput.devices[0] as Gamepad : null;
-
-        if (pad != null)
+        if (playerInput.devices.Count > 0)
         {
-            joinedPads.Add(pad);
+            var pad = playerInput.devices[0] as Gamepad;
+            if (pad != null) joinedPads.Add(pad);
         }
 
-        if (binder)
-        {
-            binder.Register(pm);
-        }
-
-        int slot = -1;
-        if (binder && pm) slot = binder.Register(pm);
+        int slot = (binder && pm) ? binder.Register(pm) : -1;
         OnLocalPlayerJoined?.Invoke(slot);
+
+        // Alternate the next prefab for the next controller join
+        FlipNext();
     }
 }
