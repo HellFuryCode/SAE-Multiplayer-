@@ -4,56 +4,47 @@ using Unity.Netcode.Transports.UTP;
 
 public class GameBootstrap : MonoBehaviour
 {
-    [Header("Local-only systems")]
     public GameObject joinSystemRoot;         // any local-couch objects to enable/disable
     public GameObject playerInputManagerRoot; // e.g., your PlayerInputManager holder
 
-    [Header("Optional default online player prefab")]
+ 
     public GameObject defaultOnlinePlayerPrefab;
+
+     private OnlinePlayerSpawner spawner;
 
     void Start()
     {
-        var mode = GameSessions.Instance?.Mode ?? GameSessions.GameMode.Local;
-
-        // Local couch: enable JoinSystem (keyboard/controller mix), no networking
-        if (mode == GameSessions.GameMode.Local)
-        {
-            ToggleLocalSystems(true);
-            return;
-        }
-
-        // Online: disable local JoinSystem (spawns are network-driven)
-        ToggleLocalSystems(false);
-
+         var mode = GameSessions.Instance?.Mode ?? GameSessions.GameMode.Local;
         var nm = NetworkManager.Singleton;
-        if (!nm)
-        {
-            Debug.LogError("No NetworkManager found in GameScene.");
-            return;
-        }
+        if (!nm) { Debug.LogError("No NetworkManager"); return; }
 
-        // Choose player prefab for NGO before StartHost/Client (optional)
-        var chosen = GameSessions.Instance.OnlinePlayerPrefab ?? defaultOnlinePlayerPrefab;
-        // if (chosen) nm.OnlinePlayerPrefab = chosen;
-
-        // Configure transport (LAN/IP for now)
         var utp = nm.GetComponent<UnityTransport>();
-        if (utp == null) { Debug.LogError("No UnityTransport on NetworkManager."); return; }
+        if (!utp) { Debug.LogError("No UnityTransport"); return; }
+//        utp.ConnectionData.Port = GameSessions.Instance.ServerPort;
 
-        utp.ConnectionData.Port = GameSessions.Instance.ServerPort;
+        spawner = FindFirstObjectByType<OnlinePlayerSpawner>();
+        if (!spawner) { Debug.LogError("No OnlinePlayerSpawner in scene"); return; }
+
+        nm.NetworkConfig.ConnectionApproval = true;
+        nm.ConnectionApprovalCallback += spawner.ApproveAndSpawn;
 
         if (mode == GameSessions.GameMode.OnlineHost)
         {
-            // Host listens on local machine; clients connect to host IP
+            // host can also set payload to reflect selection
+            nm.NetworkConfig.ConnectionData = new byte[] { GameSessions.Instance.SelectedCharIndex };
             nm.StartHost();
-            Debug.Log("Started Host");
+            Debug.Log("[Bootstrap] Host started");
         }
         else if (mode == GameSessions.GameMode.OnlineClient)
         {
-            var ip = GameSessions.Instance.ServerIp;
-            utp.SetConnectionData(ip, GameSessions.Instance.ServerPort);
+            utp.SetConnectionData(GameSessions.Instance.ServerIp, GameSessions.Instance.ServerPort);
+            nm.NetworkConfig.ConnectionData = new byte[] { GameSessions.Instance.SelectedCharIndex };
             nm.StartClient();
-            Debug.Log($"Started Client to {ip}:{GameSessions.Instance.ServerPort}");
+            // Debug.Log($"[Bootstrap] Client started {GameSessions.Instance.ServerIp}:{GameSessions.Instance.ServerPort} with char={GameSessions.Instance.SelectedCharIndex}");
+        }
+        else
+        {
+            Debug.LogWarning("Loaded Online scene with Mode=Local (no network start).");
         }
     }
 

@@ -75,31 +75,31 @@ public class PlayerScript_Multi : NetworkBehaviour
         //     }
     }
 
-    void OnEnable()
-    {
-        if (!usePlayerInput)
-        {
-            inputActions.Player.Enable();
+    // void OnEnable()
+    // {
+    //     // if (!usePlayerInput)
+    //     // {
+    //     //     inputActions.Player.Enable();
 
-           inputActions.Player.Jump.performed += ctx => Jump();
-          // inputActions.Player.Jump.performed += ctx => OnLook();
+    //     //    inputActions.Player.Jump.performed += ctx => Jump();
+    //     //   // inputActions.Player.Jump.performed += ctx => OnLook();
            
-         inputActions.Player.Sprint.started   += ctx => sprintHeld = true;
-            inputActions.Player.Sprint.canceled  += ctx => sprintHeld = false;
-        }
+    //     //  inputActions.Player.Sprint.started   += ctx => sprintHeld = true;
+    //     //     inputActions.Player.Sprint.canceled  += ctx => sprintHeld = false;
+    //     // }
 
      
-    }
+    // }
 
  
 
-    void OnDisable()
-    {
-        if (!usePlayerInput && inputActions != null)
-        {
-              inputActions.Player.Disable();
-        }
-    }
+    // void OnDisable()
+    // {
+    //     // if (!usePlayerInput && inputActions != null)
+    //     // {
+    //     //       inputActions.Player.Disable();
+    //     // }
+    // }
 
     void Start()
     {
@@ -234,6 +234,7 @@ public class PlayerScript_Multi : NetworkBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
     }
+    
 
     private void Sprint()
     {

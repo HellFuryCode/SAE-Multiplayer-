@@ -34,12 +34,18 @@ public class LocalGameFlow : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H) && joinUI) joinUI.HideNow();     // force hide
+        if (Input.GetKeyDown(KeyCode.T)) Time.timeScale = 1f; // force unpause
+    }
+
     private void OnEnable()
     {
-        if (!joinSystem) joinSystem = FindFirstObjectByType<JoinSystem>(); 
+        if (!joinSystem) joinSystem = FindFirstObjectByType<JoinSystem>();
         if (joinSystem != null)
         {
-            joinSystem.OnLocalPlayerJoined += HandlePlayerJoined;          
+            joinSystem.OnLocalPlayerJoined += HandlePlayerJoined;
         }
     }
 
@@ -67,18 +73,59 @@ public class LocalGameFlow : MonoBehaviour
     }
     private void StartGameNow()
     {
-        // Instantly hide the join panel
-        if (joinUI) joinUI.HideNow(); 
-   
-        foreach (var b in disableOnStart)
-            if (b) b.enabled = false;
+        // // Instantly hide the join panel
+        // if (joinUI) joinUI.HideNow(); 
 
-        // Enable gameplay systems 
-        foreach (var go in enableOnStart)
-            if (go) go.SetActive(true);
+        // foreach (var b in disableOnStart)
+        //     if (b) b.enabled = false;
 
-   
-        Time.timeScale = 1f;
+        // // Enable gameplay systems 
+        // foreach (var go in enableOnStart)
+        //     if (go) go.SetActive(true);
+
+
+        // Time.timeScale = 1f;
+        
+         Debug.Log("[LocalGameFlow] StartGameNow()");
+
+    // 1) HIDE PANEL (robust)
+    if (joinUI != null)
+    {
+        try
+        {
+            joinUI.HideNow(); // preferred (calls CanvasGroup etc.)
+            Debug.Log("[LocalGameFlow] joinUI.HideNow() called");
+        }
+        catch
+        {
+            // in case HideNow() missing or throws
+            joinUI.gameObject.SetActive(false);
+            Debug.LogWarning("[LocalGameFlow] joinUI.HideNow() failed, deactivated GameObject instead");
+        }
+    }
+    else
+    {
+        // fallback: try find a likely object by name
+        var go = GameObject.Find("JoinPromptPanel");
+        if (go) { go.SetActive(false); Debug.Log("[LocalGameFlow] Fallback: deactivated JoinPromptPanel by name"); }
+        else    { Debug.LogWarning("[LocalGameFlow] No joinUI reference and no JoinPromptPanel found"); }
+    }
+
+    // 2) DISABLE JOINING
+    foreach (var b in disableOnStart)
+        if (b) b.enabled = false;
+
+    // 3) ENABLE GAMEPLAY ROOTS
+    foreach (var go in enableOnStart)
+        if (go) go.SetActive(true);
+
+    // 4) UNPAUSE, LOCK CURSOR (so movement/Look works)
+    Time.timeScale = 1f;
+    Cursor.lockState = CursorLockMode.Locked;
+    Cursor.visible = false;
+
+    Debug.Log($"[LocalGameFlow] Unpaused. Time.timeScale={Time.timeScale}. Game started.");
+
     }
 
 
