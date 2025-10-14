@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2476057176193235446}
   - component: {fileID: 412166965597900092}
   - component: {fileID: 3300640664824744316}
+  - component: {fileID: 2319412858691442629}
   m_Layer: 0
   m_Name: FreeCoffeeMaker
   m_TagString: Untagged
@@ -108,3 +109,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.2866152, y: 0.43349707, z: 0.19227862}
   m_Center: {x: -0.000000007450581, y: 0.21674854, z: 0.004748475}
+--- !u!114 &2319412858691442629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213716973558344937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0

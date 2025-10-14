@@ -528,6 +528,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1538560963021552565, guid: abbf234617205844db11a1e767893e4f, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2108119116
+      objectReference: {fileID: 0}
     - target: {fileID: 2009398833688933354, guid: abbf234617205844db11a1e767893e4f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.050756667
@@ -716,6 +720,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1666736005684239924, guid: 406d4c1fe8f57d740984b56b3a32cc65, type: 3}
       insertIndex: -1
       addedObject: {fileID: 930440144566934384}
+    - targetCorrespondingSourceObject: {fileID: 1666736005684239924, guid: 406d4c1fe8f57d740984b56b3a32cc65, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1746806451490180231}
   m_SourcePrefab: {fileID: 100100000, guid: 406d4c1fe8f57d740984b56b3a32cc65, type: 3}
 --- !u!1 &46682112151044566 stripped
 GameObject:
@@ -752,6 +759,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crafter: {fileID: 0}
   points: 1
+--- !u!114 &1746806451490180231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46682112151044566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 0
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!4 &859635087091735404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2047659251917767822, guid: 406d4c1fe8f57d740984b56b3a32cc65, type: 3}
@@ -768,6 +800,10 @@ PrefabInstance:
     - target: {fileID: 3644004827102903205, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5542396742409689981, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 751282441
       objectReference: {fileID: 0}
     - target: {fileID: 5648035208080618941, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
       propertyPath: m_Name
@@ -854,6 +890,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5542396742409689981, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3605406932
+      objectReference: {fileID: 0}
     - target: {fileID: 5648035208080618941, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
       propertyPath: m_Name
       value: Ice (4)
@@ -939,6 +979,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5542396742409689981, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1843362884
+      objectReference: {fileID: 0}
     - target: {fileID: 5648035208080618941, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
       propertyPath: m_Name
       value: Ice
@@ -1023,6 +1067,10 @@ PrefabInstance:
     - target: {fileID: 3644004827102903205, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5542396742409689981, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1681004819
       objectReference: {fileID: 0}
     - target: {fileID: 5648035208080618941, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
       propertyPath: m_Name
@@ -1186,6 +1234,10 @@ PrefabInstance:
     - target: {fileID: 3644004827102903205, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5542396742409689981, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1779922457
       objectReference: {fileID: 0}
     - target: {fileID: 5648035208080618941, guid: 402da59418d6aea4683f97b7d70e3450, type: 3}
       propertyPath: m_Name
