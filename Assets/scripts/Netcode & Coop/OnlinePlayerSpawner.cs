@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class OnlinePlayerSpawner : MonoBehaviour
 {
@@ -8,13 +9,21 @@ public class OnlinePlayerSpawner : MonoBehaviour
     public Transform[] spawnPoints;
     int nextSpawn;
 
-    public void ApproveAndSpawn(NetworkManager.ConnectionApprovalRequest req,
-                                NetworkManager.ConnectionApprovalResponse res)
+    private readonly HashSet<ulong> _spawned = new();
+
+    public void ApproveAndSpawn(NetworkManager.ConnectionApprovalRequest req, NetworkManager.ConnectionApprovalResponse res)
     {
         res.Approved = true;
-        res.CreatePlayerObject = false;
+        res.CreatePlayerObject = false;  //sapnws maunally
         res.Pending = false;
 
+        ulong clientId = req.ClientNetworkId;
+
+        if (_spawned.Contains(clientId))
+        {
+            return;  //this client is already spawned
+        }
+        
         byte idx = 0;
         if (req.Payload != null && req.Payload.Length > 0) idx = req.Payload[0];
 
@@ -27,7 +36,11 @@ public class OnlinePlayerSpawner : MonoBehaviour
         var no = go.GetComponent<NetworkObject>();
         if (!no) { Debug.LogError("Prefab missing NetworkObject"); Destroy(go); return; }
 
-        no.SpawnAsPlayerObject(req.ClientNetworkId, true);
+        no.SpawnAsPlayerObject(clientId, true);
+
+        _spawned.Add(clientId);
+
+
         Debug.Log($"[Spawner] Spawned {(idx==0?"A":"B")} for client {req.ClientNetworkId}");
     }
 

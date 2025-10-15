@@ -1883,6 +1883,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1076288974}
     m_Modifications:
     - target: {fileID: 1868804711088809677, guid: 3ee430363e58744599433f823828dae8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868804711088809677, guid: 3ee430363e58744599433f823828dae8, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 399869004
       objectReference: {fileID: 0}
@@ -1998,7 +2002,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1868804711088809677, guid: 3ee430363e58744599433f823828dae8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -7440,7 +7445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 862685350}
   m_Layer: 0
-  m_Name: Spawn red
+  m_Name: drinkSpawn red
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -7608,7 +7613,7 @@ GameObject:
   - component: {fileID: 880360567}
   - component: {fileID: 880360568}
   m_Layer: 0
-  m_Name: PlayerRespawn
+  m_Name: Playerspawn and respawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7629,7 +7634,7 @@ Transform:
   m_Children:
   - {fileID: 1498675998}
   - {fileID: 1782658936}
-  m_Father: {fileID: 1945615708}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &880360568
 MonoBehaviour:
@@ -7638,7 +7643,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880360566}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ee26f19f0b919c4dace5e789d8b9230, type: 3}
   m_Name: 
@@ -12758,7 +12763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1498675998}
   m_Layer: 8
-  m_Name: Player blue
+  m_Name: blue spawn
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -13879,7 +13884,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1682997639}
   m_Layer: 0
-  m_Name: Spawn blue
+  m_Name: drinkSpawn blue
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -14459,7 +14464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1782658936}
   m_Layer: 8
-  m_Name: Player red
+  m_Name: red spawn
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -14519,7 +14524,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791193095}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
   m_Name: 
@@ -15726,7 +15731,7 @@ MonoBehaviour:
       - {fileID: 11400000, guid: ddfad878bbca310488d93f40fe82c7ea, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
+    ConnectionApproval: 1
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
@@ -15759,8 +15764,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 880360567}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1945615709
@@ -15775,9 +15779,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a5a93494e48384a86a1dbb3dc9a0db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joinSystemRoot: {fileID: 0}
-  playerInputManagerRoot: {fileID: 0}
-  defaultOnlinePlayerPrefab: {fileID: 0}
 --- !u!1 &1965141280
 GameObject:
   m_ObjectHideFlags: 0
@@ -18945,4 +18946,5 @@ SceneRoots:
   - {fileID: 746405579}
   - {fileID: 753174234}
   - {fileID: 201156415}
+  - {fileID: 880360567}
   - {fileID: 1945615708}

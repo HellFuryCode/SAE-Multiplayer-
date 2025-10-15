@@ -4,53 +4,80 @@ using Unity.Netcode.Transports.UTP;
 
 public class GameBootstrap : MonoBehaviour
 {
-    public GameObject joinSystemRoot;         // any local-couch objects to enable/disable
-    public GameObject playerInputManagerRoot; // e.g., your PlayerInputManager holder
+  //  public GameObject joinSystemRoot;         // any local-couch objects to enable/disable
+  //  public GameObject playerInputManagerRoot; // e.g., your PlayerInputManager holder
+  //  public GameObject defaultOnlinePlayerPrefab;
 
- 
-    public GameObject defaultOnlinePlayerPrefab;
-
-     private OnlinePlayerSpawner spawner;
+    private OnlinePlayerSpawner spawner;
 
     void Start()
     {
-         var mode = GameSessions.Instance?.Mode ?? GameSessions.GameMode.Local;
+       // var mode = GameSessions.Instance?.Mode ?? GameSessions.GameMode.Local;
+
         var nm = NetworkManager.Singleton;
-        if (!nm) { Debug.LogError("No NetworkManager"); return; }
+        if (!nm)
+        {
+            Debug.LogError("No NetworkManager"); return;
+        }
 
         var utp = nm.GetComponent<UnityTransport>();
-        if (!utp) { Debug.LogError("No UnityTransport"); return; }
-//        utp.ConnectionData.Port = GameSessions.Instance.ServerPort;
+        if (!utp)
+        {
+            Debug.LogError("No UnityTransport"); return;
+        }
+
+        var gs = GameSessions.Instance;
+
+        if (gs != null)
+        {
+            utp.ConnectionData.Port = gs.ServerPort;
+        }
 
         spawner = FindFirstObjectByType<OnlinePlayerSpawner>();
-        if (!spawner) { Debug.LogError("No OnlinePlayerSpawner in scene"); return; }
 
-        nm.NetworkConfig.ConnectionApproval = true;
+        if (!spawner)
+        {
+            Debug.LogError("No OnlinePlayerSpawner in scene"); return;
+
+        }
+
+        nm.ConnectionApprovalCallback -= spawner.ApproveAndSpawn;
         nm.ConnectionApprovalCallback += spawner.ApproveAndSpawn;
 
-        if (mode == GameSessions.GameMode.OnlineHost)
+        nm.NetworkConfig.ConnectionApproval = true;
+
+        // if (mode == GameSessions.GameMode.OnlineHost)
+        // {
+        //     // host can also set payload to reflect selection
+        //     nm.NetworkConfig.ConnectionData = new byte[] { GameSessions.Instance.SelectedCharIndex };
+        //     nm.StartHost();
+        //     Debug.Log("[Bootstrap] Host started");
+        // }
+        // else if (mode == GameSessions.GameMode.OnlineClient)
+        // {
+        //     utp.SetConnectionData(GameSessions.Instance.ServerIp, GameSessions.Instance.ServerPort);
+        //     nm.NetworkConfig.ConnectionData = new byte[] { GameSessions.Instance.SelectedCharIndex };
+        //     nm.StartClient();
+        //     // Debug.Log($"[Bootstrap] Client started {GameSessions.Instance.ServerIp}:{GameSessions.Instance.ServerPort} with char={GameSessions.Instance.SelectedCharIndex}");
+        // }
+        // else
+        // {
+        //     Debug.LogWarning("Loaded Online scene with Mode=Local (no network start).");
+        // }
+    }
+
+    private void OnDestroy()
+    {
+        var nm = NetworkManager.Singleton;
+        if (nm && spawner)
         {
-            // host can also set payload to reflect selection
-            nm.NetworkConfig.ConnectionData = new byte[] { GameSessions.Instance.SelectedCharIndex };
-            nm.StartHost();
-            Debug.Log("[Bootstrap] Host started");
-        }
-        else if (mode == GameSessions.GameMode.OnlineClient)
-        {
-            utp.SetConnectionData(GameSessions.Instance.ServerIp, GameSessions.Instance.ServerPort);
-            nm.NetworkConfig.ConnectionData = new byte[] { GameSessions.Instance.SelectedCharIndex };
-            nm.StartClient();
-            // Debug.Log($"[Bootstrap] Client started {GameSessions.Instance.ServerIp}:{GameSessions.Instance.ServerPort} with char={GameSessions.Instance.SelectedCharIndex}");
-        }
-        else
-        {
-            Debug.LogWarning("Loaded Online scene with Mode=Local (no network start).");
+            nm.ConnectionApprovalCallback -= spawner.ApproveAndSpawn;
         }
     }
 
-    void ToggleLocalSystems(bool on)
-    {
-        if (joinSystemRoot) joinSystemRoot.SetActive(on);
-        if (playerInputManagerRoot) playerInputManagerRoot.SetActive(on);
-    }
+    // void ToggleLocalSystems(bool on)
+    // {
+    //     if (joinSystemRoot) joinSystemRoot.SetActive(on);
+    //     if (playerInputManagerRoot) playerInputManagerRoot.SetActive(on);
+    // }
 }
