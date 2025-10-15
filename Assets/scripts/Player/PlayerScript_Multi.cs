@@ -56,13 +56,12 @@ public class PlayerScript_Multi : NetworkBehaviour
     private bool usePlayerInput => playerInput != null && playerInput.enabled;
     private bool IsManualKeyboard => keyboardProfile != KeyboardProfile.None;
 
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; // keep capsule upright duh
   
-
+    if (!IsOwner) return;
 
         playerInput = GetComponent<PlayerInput>();
         // {
@@ -123,6 +122,7 @@ public class PlayerScript_Multi : NetworkBehaviour
 
     void Update()
     {
+        if (!IsOwner) return;
         if (IsManualKeyboard)
         {
             if (keyboardProfile == KeyboardProfile.WASD) ReadWASD();
@@ -135,6 +135,7 @@ public class PlayerScript_Multi : NetworkBehaviour
 
     void FixedUpdate()
     {
+        if (!IsOwner) return;
         Move();
         ApplyJumpPhysics(); 
     }
