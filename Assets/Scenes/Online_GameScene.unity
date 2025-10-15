@@ -7638,7 +7638,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880360566}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4ee26f19f0b919c4dace5e789d8b9230, type: 3}
   m_Name: 
@@ -15732,7 +15732,7 @@ MonoBehaviour:
     TimeResyncInterval: 30
     EnsureNetworkVariableLengthSafety: 0
     EnableSceneManagement: 1
-    ForceSamePrefabs: 0
+    ForceSamePrefabs: 1
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
     RpcHashSize: 0
@@ -15777,7 +15777,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joinSystemRoot: {fileID: 0}
   playerInputManagerRoot: {fileID: 0}
-  defaultOnlinePlayerPrefab: {fileID: 880360566}
+  defaultOnlinePlayerPrefab: {fileID: 0}
 --- !u!1 &1965141280
 GameObject:
   m_ObjectHideFlags: 0
