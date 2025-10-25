@@ -50,4 +50,11 @@ public class OnlinePlayerSpawner : MonoBehaviour
             return spawnPoints[(nextSpawn++) % spawnPoints.Length];
         return transform;
     }
+
+    //because thou is a bitch
+    public void QuitGame()
+    {
+        Debug.Log("Quit Game");
+        // Application.Quit(); // enable in build
+    }
 }

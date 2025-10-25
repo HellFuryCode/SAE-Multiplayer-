@@ -6,8 +6,8 @@ public class LocalGameFlow : MonoBehaviour
     public JoinSystem joinSystem;             
         public JoinUI joinUI;                    
 
-    public GameObject[] enableOnStart;       
-    public Behaviour[]  disableOnStart;       
+ //   public GameObject[] enableOnStart;       
+//    public Behaviour[]  disableOnStart;       
 
     public bool waitForBothPlayers = false;   
 
@@ -25,7 +25,7 @@ public class LocalGameFlow : MonoBehaviour
     private void Awake()
     {
      
-        Time.timeScale = 0f;
+      //  Time.timeScale = 0f;
 
         if (joinUI)
         {
@@ -88,15 +88,15 @@ public class LocalGameFlow : MonoBehaviour
         
          Debug.Log("[LocalGameFlow] StartGameNow()");
 
-    // 1) HIDE PANEL (robust)
+   
     if (joinUI != null)
     {
         try
         {
-            joinUI.HideNow(); // preferred (calls CanvasGroup etc.)
+            joinUI.HideNow(); 
             Debug.Log("[LocalGameFlow] joinUI.HideNow() called");
         }
-        catch
+        catch 
         {
             // in case HideNow() missing or throws
             joinUI.gameObject.SetActive(false);
@@ -105,28 +105,40 @@ public class LocalGameFlow : MonoBehaviour
     }
     else
     {
-        // fallback: try find a likely object by name
+       
         var go = GameObject.Find("JoinPromptPanel");
         if (go) { go.SetActive(false); Debug.Log("[LocalGameFlow] Fallback: deactivated JoinPromptPanel by name"); }
         else    { Debug.LogWarning("[LocalGameFlow] No joinUI reference and no JoinPromptPanel found"); }
     }
 
-    // 2) DISABLE JOINING
-    foreach (var b in disableOnStart)
-        if (b) b.enabled = false;
+    // // 2) DISABLE JOINING
+    // foreach (var b in disableOnStart)
+    //     if (b) b.enabled = false;
 
-    // 3) ENABLE GAMEPLAY ROOTS
-    foreach (var go in enableOnStart)
-        if (go) go.SetActive(true);
+    // // 3) ENABLE GAMEPLAY ROOTS
+    // foreach (var go in enableOnStart)
+    //     if (go) go.SetActive(true);
 
-    // 4) UNPAUSE, LOCK CURSOR (so movement/Look works)
+    
     Time.timeScale = 1f;
     Cursor.lockState = CursorLockMode.Locked;
     Cursor.visible = false;
 
-    Debug.Log($"[LocalGameFlow] Unpaused. Time.timeScale={Time.timeScale}. Game started.");
-
+     //   Debug.Log($"[LocalGameFlow] Unpaused. Time.timeScale={Time.timeScale}. Game started.");
+      
+        if (joinUI != null)
+    {
+        var group = joinUI.GetComponent<CanvasGroup>();
+        if (group)
+        {
+            group.interactable = false;
+            group.blocksRaycasts = false;
+            group.alpha = 0f;
+        }
     }
 
+    Debug.Log($"[LocalGameFlow] DONE. Time.timeScale={Time.timeScale}");
+    }
+    
 
 }

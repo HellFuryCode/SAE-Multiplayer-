@@ -36,7 +36,7 @@ public class JoinUI : MonoBehaviour
         if (p1Text) p1Text.text = "Player 1 — press <b>F</b> (WASD) or Controller <b>Start</b>";
         if (p2Text) p2Text.text = "Player 2 — press <b>Enter</b> (Arrows) or Controller <b>Start</b>";
 
-        // subscribe to JoinSystem (auto-find)
+        // subscribe to JoinSyste
         var joinSys = FindFirstObjectByType<JoinSystem>();
         if (joinSys != null)
         {
@@ -123,7 +123,7 @@ public class JoinUI : MonoBehaviour
         _group.interactable = false;
         _group.blocksRaycasts = false;
         gameObject.SetActive(false);
-        OnHidden.Invoke();
+        OnHidden?.Invoke();
          Debug.Log("[JoinUI] HideNow()"); ///bitvh
     }
 }

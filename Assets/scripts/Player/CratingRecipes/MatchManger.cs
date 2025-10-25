@@ -153,7 +153,7 @@ public class MatchManger : MonoBehaviour
     {
         var seq = new[]
         {
-            "3" , "2", "1", "<b>GO!</b>"
+            "3" , "2", "1", "<b>GO!</b>"//bitbh
         };
 
         if (countdown) yield return StartCoroutine(countdown.PlayCountDown(seq)); //bitch 
