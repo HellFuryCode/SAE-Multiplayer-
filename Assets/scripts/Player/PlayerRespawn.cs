@@ -1,22 +1,65 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerRespawn : MonoBehaviour
+public class PlayerRespawn : NetworkBehaviour
 {
     public Transform spawnPoint;
+    public float defaultYOffset = 0.05f;
 
-    public void RespawnNow(float yOffest = 0f)
+    private PlayerRespawnManager manager;
+    private PlayerIdentity pid;
+    private Rigidbody rb;
+
+    private void Awake()
     {
-        if (!spawnPoint) return;
-        var pos = spawnPoint.position + Vector3.up * yOffest; //space to spawn without clipping or going mad\
-        transform.SetPositionAndRotation(pos, spawnPoint.rotation);
+        rb = GetComponent<Rigidbody>();
+        pid = GetComponent<PlayerIdentity>();
+        manager = FindFirstObjectByType<PlayerRespawnManager>();   
+    }
 
-        var rb = GetComponent<Rigidbody>();
+    public void RespawnNow(float yOffest = float.NaN)
+    {
+        float y = float.IsNaN(yOffest) ? defaultYOffset : yOffest;
+
+        if (!IsNetActive())
+        {
+            DoRespawn(y);
+            return;
+        }
+
+        if (IsServer) DoRespawn(y);
+        else RequestRespawnServerRpc(y);
+    }
+    
+      bool IsNetActive() =>
+        NetworkManager.Singleton != null && NetworkManager.Singleton.IsListening;
+
+    Transform ResolveSpawn()
+    {
+        if (spawnPoint) return spawnPoint;
+        if (manager && pid != null) return manager.GetSpawnFOrIndex(pid.playerIndex);
+        return null; // fallback = current pos
+    }
+
+    void DoRespawn(float yOff)
+    {
+        var sp = ResolveSpawn();
+        Vector3 pos = (sp ? sp.position : transform.position) + Vector3.up * yOff;
+        Quaternion rot = sp ? sp.rotation : transform.rotation;
+
+        transform.SetPositionAndRotation(pos, rot);
+
         if (rb)
         {
-            rb.linearVelocity = Vector3.zero; rb.angularVelocity = Vector3.zero;
+            rb.linearVelocity  = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    void RequestRespawnServerRpc(float yOff) => DoRespawn(yOff);
 }
+
 
 // How To Make A HORROR Game In Unity 
 //date accessed 2025/9/17

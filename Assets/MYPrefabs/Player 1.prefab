@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 2469959812790846217}
   - component: {fileID: 8523797556868114481}
   - component: {fileID: 8179837245499431032}
+  - component: {fileID: 2625364567202553054}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -426,6 +427,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 5
+--- !u!114 &2625364567202553054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3223180292753875082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ec6159d91dc21e46b1a4299c83b8d24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHP: 100
+  respawnDelay: 1.25
+  invulnAfterRespawn: 1
 --- !u!1 &5674410349178484443
 GameObject:
   m_ObjectHideFlags: 0
