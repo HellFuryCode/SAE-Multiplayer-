@@ -46,15 +46,11 @@ GameObject:
   - component: {fileID: 6084721550546647783}
   - component: {fileID: 3896984266231441601}
   - component: {fileID: 2957704792246678049}
-  - component: {fileID: 4931889769318326600}
   - component: {fileID: 7112947430529313808}
-  - component: {fileID: 5739660886660907279}
   - component: {fileID: 2927355500911065081}
   - component: {fileID: 4730120080002306367}
   - component: {fileID: 2469959812790846217}
   - component: {fileID: 8523797556868114481}
-  - component: {fileID: 8179837245499431032}
-  - component: {fileID: 2625364567202553054}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -240,33 +236,6 @@ MonoBehaviour:
   staminaDrainPerSecond: 22
   staminaRegenPerSecond: 16
   sprintMinPercentToStart: 0.174
---- !u!114 &4931889769318326600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3223180292753875082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b67f0c1c97953246a39dc21932d8944, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  promptText: {fileID: 0}
-  showDropPrompt: 1
-  lookOrigin: {fileID: 6121907051102446837}
-  holdSocket: {fileID: 2617640377521199163}
-  pickupMask:
-    serializedVersion: 2
-    m_Bits: 128
-  aim: 0
-  originHeightOffset: 0
-  interactRange: 1.2
-  sphereRadius: 2
-  interactCooldown: 0.1
-  showGizmosAlways: 1
-  debugLogs: 1
-  craftRayDistance: 2.5
 --- !u!114 &7112947430529313808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,20 +266,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &5739660886660907279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3223180292753875082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c4d4c7651fa604294bc216b52b1bcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerIndex: 0
-  displayName: Player 1
 --- !u!114 &2927355500911065081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,36 +368,6 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
---- !u!114 &8179837245499431032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3223180292753875082}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ebf8c6a864eb246bbed8cabe9dd100, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  moveSpeed: 5
---- !u!114 &2625364567202553054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3223180292753875082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ec6159d91dc21e46b1a4299c83b8d24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  maxHP: 100
-  respawnDelay: 1.25
-  invulnAfterRespawn: 1
 --- !u!1 &5674410349178484443
 GameObject:
   m_ObjectHideFlags: 0

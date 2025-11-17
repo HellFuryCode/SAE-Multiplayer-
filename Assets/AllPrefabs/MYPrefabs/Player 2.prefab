@@ -46,14 +46,11 @@ GameObject:
   - component: {fileID: 4240673997471179647}
   - component: {fileID: 6785809291239617931}
   - component: {fileID: 6055250244075370835}
-  - component: {fileID: 7345354566548665280}
   - component: {fileID: 5929409500960118728}
-  - component: {fileID: 175686977062103778}
   - component: {fileID: 1429106835301420475}
   - component: {fileID: 8052318622508477579}
   - component: {fileID: -7302329343093560172}
   - component: {fileID: 3958478638319273847}
-  - component: {fileID: 875852763257681218}
   m_Layer: 8
   m_Name: Player 2
   m_TagString: Player
@@ -239,33 +236,6 @@ MonoBehaviour:
   staminaDrainPerSecond: 22
   staminaRegenPerSecond: 16
   sprintMinPercentToStart: 0.174
---- !u!114 &7345354566548665280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7365878391028675372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b67f0c1c97953246a39dc21932d8944, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  promptText: {fileID: 0}
-  showDropPrompt: 1
-  lookOrigin: {fileID: 4430381227162431227}
-  holdSocket: {fileID: 2247944163485258160}
-  pickupMask:
-    serializedVersion: 2
-    m_Bits: 128
-  aim: 0
-  originHeightOffset: 0
-  interactRange: 1.2
-  sphereRadius: 2
-  interactCooldown: 0.1
-  showGizmosAlways: 1
-  debugLogs: 1
-  craftRayDistance: 2.5
 --- !u!114 &5929409500960118728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,20 +266,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &175686977062103778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7365878391028675372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c4d4c7651fa604294bc216b52b1bcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerIndex: 1
-  displayName: Player 2
 --- !u!114 &1429106835301420475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,20 +368,6 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
---- !u!114 &875852763257681218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7365878391028675372}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ebf8c6a864eb246bbed8cabe9dd100, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  moveSpeed: 5
 --- !u!1 &7662319807283572305
 GameObject:
   m_ObjectHideFlags: 0
